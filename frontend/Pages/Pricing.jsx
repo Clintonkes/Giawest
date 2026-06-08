@@ -25,7 +25,7 @@ export default function Pricing() {
               {pricingPlans.map((plan) => (
                 <article
                   key={plan.name}
-                  className={`card card-hover p-7 ${plan.featured ? 'border-brand-teal bg-brand-navy text-white' : 'bg-white'}`}
+                  className={`card card-hover p-7 ${plan.featured ? '!border-brand-teal !bg-brand-navy !text-white' : 'bg-white'}`}
                 >
                   {plan.featured && (
                     <div className="mb-5 inline-flex rounded-full bg-brand-mint px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] text-brand-navy">

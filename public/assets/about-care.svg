@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Service care illustration">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#eaf9f4"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="620" fill="url(#bg)"/>
+  <circle cx="214" cy="180" r="128" fill="#ddf5ee"/>
+  <circle cx="214" cy="180" r="80" fill="#4fb6b0" fill-opacity=".18"/>
+  <rect x="82" y="92" width="220" height="260" rx="28" fill="#fff" stroke="#e5e7eb"/>
+  <rect x="116" y="132" width="150" height="18" rx="9" fill="#1f3a5f" fill-opacity=".11"/>
+  <rect x="116" y="168" width="110" height="18" rx="9" fill="#4fb6b0" fill-opacity=".24"/>
+  <rect x="116" y="204" width="136" height="18" rx="9" fill="#1f3a5f" fill-opacity=".08"/>
+  <rect x="116" y="258" width="96" height="18" rx="9" fill="#4fb6b0" fill-opacity=".18"/>
+  <rect x="390" y="154" width="314" height="184" rx="34" fill="#1f3a5f" fill-opacity=".94"/>
+  <rect x="430" y="204" width="110" height="20" rx="10" fill="#ffffff" fill-opacity=".88"/>
+  <rect x="430" y="240" width="176" height="16" rx="8" fill="#ddf5ee" fill-opacity=".88"/>
+  <rect x="430" y="276" width="142" height="16" rx="8" fill="#ffffff" fill-opacity=".72"/>
+  <circle cx="696" cy="416" r="88" fill="#4fb6b0" fill-opacity=".12"/>
+  <rect x="602" y="398" width="166" height="44" rx="22" fill="#ffffff" fill-opacity=".84"/>
+</svg>

@@ -38,16 +38,11 @@ export default function Hero() {
           <div className="relative">
             <div className="relative overflow-hidden rounded-[2rem] border border-brand-gray bg-brand-mint shadow-[0_34px_80px_-44px_rgba(31,58,95,0.55)]">
               <BubbleField />
-              <svg viewBox="0 0 800 620" role="img" aria-label="Polished interior illustration" className="relative z-[0] h-[480px] w-full">
-                <rect width="800" height="620" fill="#DDF5EE" />
-                <circle cx="610" cy="150" r="86" fill="#FFFFFF" fillOpacity="0.42" />
-                <rect x="78" y="88" width="244" height="290" rx="26" fill="#FFFFFF" fillOpacity="0.62" />
-                <rect x="112" y="128" width="176" height="18" rx="9" fill="#1F3A5F" fillOpacity="0.12" />
-                <rect x="112" y="160" width="132" height="18" rx="9" fill="#4FB6B0" fillOpacity="0.30" />
-                <rect x="468" y="392" width="250" height="108" rx="28" fill="#1F3A5F" fillOpacity="0.92" />
-                <rect x="498" y="422" width="88" height="18" rx="9" fill="#FFFFFF" fillOpacity="0.86" />
-                <rect x="498" y="452" width="136" height="14" rx="7" fill="#DDF5EE" fillOpacity="0.92" />
-              </svg>
+              <img
+                src="/assets/home-hero.svg"
+                alt="Polished interior illustration"
+                className="relative z-[0] h-[480px] w-full object-cover"
+              />
               <div className="absolute inset-0 z-[1] bg-gradient-to-t from-brand-navy/42 via-transparent to-transparent" />
               <div className="absolute left-5 top-5 z-[2] rounded-2xl bg-white/95 p-4 shadow-lg">
                 <div className="flex items-center gap-3">
