@@ -1,55 +1,65 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+import BubbleField from './BubbleField'
+import { BadgeIcon } from './LaundryIcons'
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-blue-50 via-white to-teal-50 py-20 lg:py-32 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-              Professional Cleaning Services <span className="bg-gradient-to-r from-blue-700 to-teal-500 bg-clip-text text-transparent">You Can Trust</span>
+    <section className="relative overflow-hidden border-b border-brand-gray/70 bg-white py-20 lg:py-28">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(79,182,176,0.12),transparent_28%),radial-gradient(circle_at_top_right,rgba(31,58,95,0.12),transparent_26%)]" />
+      <div className="section-shell relative">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr,0.95fr]">
+          <div className="max-w-2xl">
+            <div className="eyebrow mb-6">Premium home and commercial cleaning</div>
+            <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-brand-navy sm:text-5xl lg:text-6xl">
+              Cleaning that feels polished from arrival to final check.
             </h1>
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              We provide premium residential and commercial cleaning services with meticulous attention to detail. Your satisfaction is guaranteed.
+            <p className="mt-6 max-w-xl text-lg leading-8 text-brand-navy/72">
+              Detailed work, careful methods, and a reliable service rhythm for busy homes and businesses.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <a href="/booking" className="btn-primary text-center">Book Now</a>
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <Link to="/booking" className="btn-primary">
+                Book Pickup
+              </Link>
+              <Link to="/services" className="btn-secondary">
+                View Services
+              </Link>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="flex items-center space-x-2">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-sm font-medium text-gray-700">Insured</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-sm font-medium text-gray-700">Reliable</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-sm font-medium text-gray-700">Professional</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-sm font-medium text-gray-700">Guaranteed</span>
-              </div>
+            <div className="mt-10 flex flex-wrap gap-3">
+              {['Fast Delivery', 'Eco-Friendly', 'Professional Care', 'Reliable Service'].map((label) => (
+                <span key={label} className="inline-flex items-center gap-2 rounded-full border border-brand-gray bg-white px-4 py-2 text-sm font-semibold text-brand-navy">
+                  <span className="text-brand-teal">✓</span>
+                  {label}
+                </span>
+              ))}
             </div>
           </div>
+
           <div className="relative">
-            <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-blue-100 to-teal-100">
-              <img 
-                src="https://images.unsplash.com/photo-1581578017442-73e757bfcf4d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                alt="Professional Cleaner" 
-                className="w-full h-full object-cover"
+            <div className="relative overflow-hidden rounded-[2rem] border border-brand-gray bg-brand-mint shadow-[0_34px_80px_-44px_rgba(31,58,95,0.55)]">
+              <BubbleField />
+              <img
+                src="https://images.unsplash.com/photo-1544035470-51f9f7d1f1a7?auto=format&fit=crop&w=1200&q=80"
+                alt="Cleaning service preview"
+                className="relative z-[0] h-[480px] w-full object-cover"
               />
-            </div>
-            <div className="absolute -bottom-6 -right-6 bg-white rounded-2xl p-4 shadow-lg">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xl">★</span>
+              <div className="absolute inset-0 z-[1] bg-gradient-to-t from-brand-navy/42 via-transparent to-transparent" />
+              <div className="absolute left-5 top-5 z-[2] rounded-2xl bg-white/95 p-4 shadow-lg">
+                <div className="flex items-center gap-3">
+                  <BadgeIcon name="clock" />
+                  <div>
+                    <div className="text-sm font-bold text-brand-navy">Same-day handling</div>
+                    <div className="text-xs text-brand-navy/60">Fast, careful turnaround</div>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-bold text-gray-900">4.9/5 Rating</p>
-                  <p className="text-sm text-gray-500">Customer Satisfaction</p>
+              </div>
+              <div className="absolute bottom-5 right-5 z-[2] rounded-2xl bg-white/95 p-4 shadow-lg">
+                <div className="flex items-center gap-3">
+                  <BadgeIcon name="shield" />
+                  <div>
+                    <div className="text-sm font-bold text-brand-navy">Premium finish</div>
+                    <div className="text-xs text-brand-navy/60">Press, fold, and pack</div>
+                  </div>
                 </div>
               </div>
             </div>

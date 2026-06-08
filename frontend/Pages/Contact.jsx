@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { api } from '../services/api'
+import { contact } from '../data/laundrySite'
 import toast from 'react-hot-toast'
 
 export default function Contact() {
@@ -10,7 +11,7 @@ export default function Contact() {
     email: '',
     phone: '',
     subject: '',
-    message: ''
+    message: '',
   })
   const [loading, setLoading] = useState(false)
 
@@ -19,105 +20,89 @@ export default function Contact() {
     setLoading(true)
     try {
       await api.post('/contact', formData)
-      toast.success('Message sent successfully!')
+      toast.success('Message sent successfully.')
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
     } catch (error) {
-      toast.error('Failed to send message')
+      toast.error('Failed to send message.')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
     <>
       <Navbar />
-      <section className="py-20 bg-gradient-to-br from-blue-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="card p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Send a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-4">
+      <main className="surface-mint py-20 lg:py-24">
+        <div className="section-shell">
+          <div className="grid gap-10 lg:grid-cols-[1fr,0.9fr]">
+            <div className="card p-6 sm:p-8">
+              <h1 className="text-3xl font-extrabold text-brand-navy">Send a message</h1>
+              <p className="mt-3 text-sm leading-7 text-brand-navy/70">Use this form for questions, commercial requests, or follow-up on your cleaning visit.</p>
+              <form onSubmit={handleSubmit} className="mt-8 space-y-4">
                 <input
                   type="text"
-                  placeholder="Your Name"
+                  placeholder="Your name"
                   value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="input-field"
                   required
                 />
                 <input
                   type="email"
-                  placeholder="Email Address"
+                  placeholder="Email address"
                   value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="input-field"
                   required
                 />
                 <input
                   type="tel"
-                  placeholder="Phone (optional)"
+                  placeholder="Phone number"
                   value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="input-field"
                 />
                 <input
                   type="text"
                   placeholder="Subject"
                   value={formData.subject}
-                  onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                   className="input-field"
                   required
                 />
                 <textarea
-                  placeholder="Your Message"
+                  placeholder="Message"
                   value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   className="input-field"
                   rows="5"
                   required
                 />
                 <button type="submit" disabled={loading} className="btn-primary w-full">
-                  {loading ? 'Sending...' : 'Send Message'}
+                  {loading ? 'Sending...' : 'Send message'}
                 </button>
               </form>
             </div>
-            <div>
-              <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">Contact Us</h1>
-              <p className="text-gray-600 mb-8 leading-relaxed">
-                Have questions or ready to schedule? We're here to help. Reach out via form, email, or phone.
-              </p>
-              <div className="space-y-6">
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-blue-700 text-xl">📞</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Phone</p>
-                    <p className="text-gray-600">+1(213)909-1217</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-teal-700 text-xl">✉️</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Email</p>
-                    <p className="text-gray-600">okriconsult@proton.me</p>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
-                    <span className="text-green-700 text-xl">📍</span>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900">Location</p>
-                    <p className="text-gray-600">700 N Inglewood Ave Apt 1, Inglewood CA 90302</p>
-                  </div>
+
+            <aside className="space-y-5">
+              <div className="card p-6">
+                <h2 className="text-xl font-bold text-brand-navy">Contact details</h2>
+                <div className="mt-4 space-y-4 text-sm text-brand-navy/72">
+                  <p><span className="font-semibold text-brand-navy">Phone:</span> {contact.phone}</p>
+                  <p><span className="font-semibold text-brand-navy">Email:</span> {contact.email}</p>
+                  <p><span className="font-semibold text-brand-navy">Address:</span> {contact.address}</p>
                 </div>
               </div>
-            </div>
+              <div className="card p-6">
+                <h2 className="text-xl font-bold text-brand-navy">What to expect</h2>
+                <p className="mt-3 text-sm leading-7 text-brand-navy/70">
+                  We aim to respond quickly and help you move toward the right cleaning plan or service request.
+                </p>
+              </div>
+            </aside>
           </div>
         </div>
-      </section>
+      </main>
       <Footer />
     </>
   )

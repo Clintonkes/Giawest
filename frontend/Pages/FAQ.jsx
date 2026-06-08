@@ -2,52 +2,56 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { faqs } from '../data/laundrySite'
 
 export default function FAQ() {
-  const [openIndex, setOpenIndex] = useState(null)
-  
-  const faqs = [
-    { question: "What areas do you service?", answer: "We service Inglewood, CA and surrounding areas within a 30-mile radius. Contact us to confirm service availability in your area." },
-    { question: "How much does cleaning cost?", answer: "Our pricing varies based on service type, property size, and frequency. We offer competitive rates starting at $89 for basic residential cleaning. Get a free quote for accurate pricing." },
-    { question: "Do you bring your own cleaning supplies?", answer: "Yes, we bring all professional-grade cleaning supplies and equipment. We use eco-friendly products that are safe for your family and pets." },
-    { question: "Are you insured and bonded?", answer: "Absolutely. We are fully licensed, insured, and bonded for your peace of mind. All our cleaners undergo background checks." },
-    { question: "What is your cancellation policy?", answer: "We require 24 hours notice for cancellations. Cancellations made less than 24 hours before the scheduled service may incur a fee." },
-    { question: "How do I pay for services?", answer: "We accept credit cards, debit cards, and bank transfers. Payment is processed securely online after service completion." }
-  ]
+  const [openIndex, setOpenIndex] = useState(0)
 
   return (
     <>
       <Navbar />
-      <section className="py-20 bg-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h1>
-            <p className="text-gray-600">Find answers to common questions about our services</p>
+      <main className="surface-mint py-20 lg:py-24">
+        <div className="section-shell">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="eyebrow">FAQ</div>
+            <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-brand-navy sm:text-5xl">
+              Common questions about scheduling, cleaning, and service delivery
+            </h1>
           </div>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="card">
-                <button
-                  onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                  className="w-full p-6 text-left flex justify-between items-center"
-                >
-                  <span className="font-bold text-gray-900">{faq.question}</span>
-                  <span className={`text-teal-600 text-xl transition-transform ${openIndex === index ? 'rotate-45' : ''}`}>+</span>
-                </button>
-                {openIndex === index && (
-                  <div className="px-6 pb-6">
-                    <p className="text-gray-600">{faq.answer}</p>
-                  </div>
-                )}
-              </div>
-            ))}
+
+          <div className="mx-auto mt-14 max-w-4xl space-y-4">
+            {faqs.map((faq, index) => {
+              const open = openIndex === index
+              return (
+                <div key={faq.question} className="card overflow-hidden">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(open ? -1 : index)}
+                    className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                  >
+                    <span className="font-bold text-brand-navy">{faq.question}</span>
+                    <span className={`flex h-9 w-9 items-center justify-center rounded-full border border-brand-gray text-brand-teal transition-transform ${open ? 'rotate-45' : ''}`}>
+                      +
+                    </span>
+                  </button>
+                  {open && (
+                    <div className="px-6 pb-6 text-sm leading-7 text-brand-navy/70">
+                      {faq.answer}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
-          <div className="text-center mt-12">
-            <p className="text-gray-600 mb-4">Still have questions?</p>
-            <Link to="/contact" className="btn-secondary">Contact Us</Link>
+
+          <div className="mt-14 text-center">
+            <p className="text-brand-navy/70">Still have questions?</p>
+            <Link to="/contact" className="btn-secondary mt-5">
+              Contact us
+            </Link>
           </div>
         </div>
-      </section>
+      </main>
       <Footer />
     </>
   )

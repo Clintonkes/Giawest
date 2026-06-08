@@ -14,49 +14,53 @@ export default function AdminLogin() {
     try {
       const response = await api.post('/auth/login', formData)
       localStorage.setItem('token', response.access_token)
-      toast.success('Login successful!')
+      toast.success('Login successful.')
       navigate('/admin/dashboard')
     } catch (error) {
       toast.error('Invalid credentials')
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 flex items-center justify-center">
-      <div className="card p-12 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-between gap-4 mb-6">
-            <Link to="/" className="text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
-              Home
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(79,182,176,0.16),transparent_30%),linear-gradient(180deg,#FFFFFF_0%,#DDF5EE_100%)] px-4 py-10">
+      <div className="mx-auto flex min-h-[calc(100vh-80px)] max-w-md items-center">
+        <div className="card w-full p-8 sm:p-10">
+          <div className="mb-8 text-center">
+            <Link to="/" className="inline-flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-navy text-white">
+                <span className="text-lg font-extrabold">G</span>
+              </span>
+              <div className="text-left">
+                <div className="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-navy">Admin</div>
+                <div className="text-xs text-brand-teal">Cleaning dashboard</div>
+              </div>
             </Link>
-            <span className="text-xs uppercase tracking-[0.2em] text-gray-500">Admin Login</span>
           </div>
-          <Link to="/" className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-teal-500 bg-clip-text text-transparent">
-            Okri Admin
-          </Link>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input
+              type="email"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              className="input-field"
+              required
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              className="input-field"
+              required
+            />
+            <button type="submit" disabled={loading} className="btn-primary w-full">
+              {loading ? 'Signing in...' : 'Sign in'}
+            </button>
+          </form>
         </div>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <input
-            type="email"
-            placeholder="Email Address"
-            value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
-            className="input-field"
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={(e) => setFormData({...formData, password: e.target.value})}
-            className="input-field"
-            required
-          />
-          <button type="submit" disabled={loading} className="btn-primary w-full">
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
       </div>
     </div>
   )

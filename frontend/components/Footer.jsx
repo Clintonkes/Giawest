@@ -1,45 +1,77 @@
 import { Link } from 'react-router-dom'
+import { brand, contact, navLinks, serviceHighlights } from '../data/laundrySite'
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="border-t border-brand-gray bg-brand-navy text-white">
+      <div className="section-shell py-14 lg:py-16">
+        <div className="grid gap-10 lg:grid-cols-[1.25fr,0.85fr,0.85fr,1fr]">
           <div>
-            <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">
-              Okri Consult LLC
-            </h3>
-            <p className="text-gray-400">Professional cleaning services that make your space shine.</p>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              <li><Link to="/" className="text-gray-400 hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors">About</Link></li>
-              <li><Link to="/services" className="text-gray-400 hover:text-white transition-colors">Services</Link></li>
-              <li><Link to="/booking" className="text-gray-400 hover:text-white transition-colors">Booking</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Services</h4>
-            <ul className="space-y-2">
-              <li><span className="text-gray-400">Residential Cleaning</span></li>
-              <li><span className="text-gray-400">Commercial Cleaning</span></li>
-              <li><span className="text-gray-400">Deep Cleaning</span></li>
-              <li><span className="text-gray-400">Move-in/Move-out</span></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold mb-4">Contact Info</h4>
-            <div className="space-y-2 text-gray-400">
-              <p>📞 +1(213)909-1217</p>
-              <p>✉️ okriconsult@proton.me</p>
-              <p>📍 700 N Inglewood Ave Apt 1, Inglewood CA 90302</p>
+            <div className="mb-4 flex items-center gap-3">
+              <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-brand-navy">
+                <span className="text-lg font-extrabold">G</span>
+              </span>
+              <div>
+                <div className="text-sm font-extrabold tracking-[0.22em] uppercase text-white">
+                  {brand.shortName}
+                </div>
+                <div className="text-xs text-brand-mint/90">Residential and commercial cleaning specialists</div>
+              </div>
+            </div>
+            <p className="max-w-md text-sm leading-6 text-white/78">
+              {brand.tagline}
+            </p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {['Fast turnaround', 'Premium finishing', 'Pickup & delivery'].map((item) => (
+                <span key={item} className="rounded-full border border-white/15 bg-white/6 px-4 py-2 text-xs font-semibold text-white/82">
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
+
+          <div>
+            <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.22em] text-brand-mint">
+              Explore
+            </h3>
+            <div className="grid gap-3 text-sm">
+              {navLinks.slice(0, 8).map((link) => (
+                <Link key={link.to} to={link.to} className="text-white/80 transition-colors hover:text-brand-mint">
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.22em] text-brand-mint">
+              Services
+            </h3>
+            <div className="grid gap-3 text-sm text-white/80">
+              {serviceHighlights.slice(0, 4).map((service) => (
+                <span key={service.title}>{service.title}</span>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-sm font-bold uppercase tracking-[0.22em] text-brand-mint">
+              Contact
+            </h3>
+            <div className="space-y-3 text-sm text-white/80">
+              <p>{contact.phone}</p>
+              <p>{contact.email}</p>
+              <p>{contact.address}</p>
+            </div>
+            <Link to="/booking" className="btn-secondary mt-6 inline-flex">
+              Schedule Pickup
+            </Link>
+          </div>
         </div>
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Okri Consult LLC. All rights reserved.</p>
+
+        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/65 md:flex-row md:items-center md:justify-between">
+          <p>&copy; {new Date().getFullYear()} {brand.shortName}. All rights reserved.</p>
+              <p>Premium cleaning care with a calm, polished experience.</p>
         </div>
       </div>
     </footer>

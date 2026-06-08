@@ -1,69 +1,91 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { LaundryIcon } from '../components/LaundryIcons'
+import { brand, processSteps, stats, whyChooseUs } from '../data/laundrySite'
 
 export default function About() {
   return (
     <>
       <Navbar />
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-            <div>
-              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-                About Okri Consult LLC
-              </h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                With years of experience in the cleaning industry, Okri Consult LLC has built a reputation for excellence and reliability. We pride ourselves on delivering exceptional cleaning services that exceed expectations.
-              </p>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Our professional team uses eco-friendly products and advanced techniques to ensure your space is not just clean, but truly spotless. We understand that your time is valuable, so we work efficiently while maintaining the highest quality standards.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                From residential homes to commercial offices, we treat every space with the care and attention it deserves. Your satisfaction is our top priority.
-              </p>
-            </div>
-            <div className="relative">
-              <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-xl">
-                <img 
-                  src="https://images.unsplash.com/photo-1600880706871-5e3b218bab05?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                  alt="Cleaning Team" 
-                  className="w-full h-full object-cover"
+      <main>
+        <section className="surface-mint py-20 lg:py-24">
+          <div className="section-shell">
+            <div className="grid gap-10 lg:grid-cols-[1fr,0.9fr] lg:items-center">
+              <div>
+                <div className="eyebrow">About us</div>
+                <h1 className="mt-5 text-4xl font-extrabold tracking-tight text-brand-navy sm:text-5xl">
+                  {brand.shortName} delivers premium care for every space.
+                </h1>
+                <p className="mt-5 max-w-2xl text-lg leading-8 text-brand-navy/70">
+                  We built the service around quality, convenience, and a calm customer experience. From routine upkeep to deep cleaning, every visit receives careful attention.
+                </p>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                  <Link to="/booking" className="btn-primary">
+                    Schedule Pickup
+                  </Link>
+                  <Link to="/services" className="btn-secondary">
+                    View Services
+                  </Link>
+                </div>
+                <div className="mt-10 grid gap-4 sm:grid-cols-4">
+                  {stats.map((stat) => (
+                    <div key={stat.label} className="rounded-3xl border border-brand-gray bg-white p-4">
+                      <div className="text-2xl font-extrabold text-brand-navy">{stat.value}</div>
+                      <div className="mt-1 text-sm text-brand-navy/65">{stat.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="card overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1582735689369-4fe89db7114c?auto=format&fit=crop&w=1200&q=80"
+                  alt="Professional cleaning workspace"
+                  className="h-[420px] w-full object-cover"
                 />
               </div>
             </div>
           </div>
+        </section>
 
-          <div className="bg-gradient-to-r from-blue-50 to-teal-50 rounded-3xl p-8 lg:p-12">
-            <h3 className="text-2xl lg:text-3xl font-bold text-center text-gray-900 mb-12">
-              Why Choose Okri Consult LLC
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl">🏆</span>
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2">Experienced Professionals</h4>
-                <p className="text-gray-600">Our team has years of experience and training in professional cleaning</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl">✓</span>
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2">Satisfaction Guaranteed</h4>
-                <p className="text-gray-600">We're not satisfied until you're completely happy with our work</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl">🌱</span>
-                </div>
-                <h4 className="font-bold text-gray-900 mb-2">Eco-Friendly Products</h4>
-                <p className="text-gray-600">We use safe, environmentally friendly cleaning products for your family</p>
-              </div>
+        <section className="bg-white py-20 lg:py-24">
+          <div className="section-shell">
+            <div className="grid gap-6 md:grid-cols-3">
+              {whyChooseUs.map((item) => (
+                <article key={item.title} className="card card-hover p-6">
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-mint text-brand-navy">
+                    <LaundryIcon name="shield" />
+                  </div>
+                  <h2 className="text-xl font-bold text-brand-navy">{item.title}</h2>
+                  <p className="mt-3 text-sm leading-7 text-brand-navy/68">{item.description}</p>
+                </article>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+
+        <section className="surface-mint py-20 lg:py-24">
+          <div className="section-shell">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="eyebrow">Process</div>
+              <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-brand-navy sm:text-4xl">
+                Designed to feel easy every step of the way
+              </h2>
+            </div>
+            <div className="mt-14 grid gap-5 md:grid-cols-3">
+              {processSteps.map((step) => (
+                <div key={step.step} className="card card-hover p-6">
+                  <div className="text-sm font-bold uppercase tracking-[0.24em] text-brand-teal">{step.step}</div>
+                  <h3 className="mt-3 text-xl font-bold text-brand-navy">{step.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-brand-navy/68">{step.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </main>
       <Footer />
     </>
   )

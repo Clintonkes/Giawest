@@ -1,49 +1,95 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { brand, navLinks } from '../data/laundrySite'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-teal-500 bg-clip-text text-transparent">
-              Okri Consult LLC
-            </Link>
-          </div>
-          <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-blue-600 transition-colors">Home</Link>
-            <Link to="/about" className="text-gray-700 hover:text-blue-600 transition-colors">About</Link>
-            <Link to="/services" className="text-gray-700 hover:text-blue-600 transition-colors">Services</Link>
-            <Link to="/testimonials" className="text-gray-700 hover:text-blue-600 transition-colors">Testimonials</Link>
-            <Link to="/faq" className="text-gray-700 hover:text-blue-600 transition-colors">FAQ</Link>
-            <Link to="/contact" className="text-gray-700 hover:text-blue-600 transition-colors">Contact</Link>
-            <Link to="/booking" className="btn-secondary">Book Now</Link>
-          </div>
-          <div className="md:hidden flex items-center">
-            <button onClick={() => setIsOpen(!isOpen)} className="text-gray-700">
+    <header className="sticky top-0 z-50 border-b border-brand-gray/80 bg-white/88 backdrop-blur-xl">
+      <div className="section-shell">
+        <div className="flex h-20 items-center justify-between">
+          <Link to="/" className="group flex items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-navy text-white shadow-[0_16px_30px_-20px_rgba(31,58,95,0.75)]">
+              <span className="text-lg font-extrabold">G</span>
+            </span>
+            <div>
+              <div className="text-sm font-extrabold tracking-[0.22em] text-brand-navy uppercase">
+                {brand.shortName}
+              </div>
+              <div className="text-xs font-medium text-brand-teal">
+                Premium cleaning care
+              </div>
+            </div>
+          </Link>
+
+          <nav className="hidden items-center gap-1 lg:flex">
+            {navLinks.slice(0, 8).map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+                    isActive ? 'bg-brand-mint text-brand-navy' : 'text-brand-navy/80 hover:bg-brand-mint/70'
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+            <NavLink to="/admin" className="btn-ghost ml-2 text-sm">
+              Admin
+            </NavLink>
+            <NavLink to="/booking" className="btn-primary ml-2 text-sm">
+              Book Now
+            </NavLink>
+          </nav>
+
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-gray bg-white text-brand-navy lg:hidden"
+            onClick={() => setIsOpen((current) => !current)}
+            aria-label="Toggle menu"
+          >
+            {isOpen ? (
+              <span className="text-2xl leading-none">×</span>
+            ) : (
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {isOpen ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /> : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
-            </button>
-          </div>
+            )}
+          </button>
         </div>
+
+        {isOpen && (
+          <div className="pb-5 lg:hidden">
+            <div className="card overflow-hidden border-brand-gray bg-white p-3">
+              <div className="grid gap-1">
+                {navLinks.map((link) => (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setIsOpen(false)}
+                    className={({ isActive }) =>
+                      `rounded-2xl px-4 py-3 text-sm font-medium ${
+                        isActive ? 'bg-brand-mint text-brand-navy' : 'text-brand-navy/80 hover:bg-brand-mint/70'
+                      }`
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
+                ))}
+                <NavLink to="/admin" onClick={() => setIsOpen(false)} className="rounded-2xl px-4 py-3 text-sm font-semibold text-brand-navy hover:bg-brand-mint/70">
+                  Admin Login
+                </NavLink>
+                <Link to="/booking" onClick={() => setIsOpen(false)} className="btn-primary mt-2">
+                  Book Now
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      {isOpen && (
-        <div className="md:hidden bg-white border-t">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link to="/" className="block px-3 py-2 text-gray-700">Home</Link>
-            <Link to="/about" className="block px-3 py-2 text-gray-700">About</Link>
-            <Link to="/services" className="block px-3 py-2 text-gray-700">Services</Link>
-            <Link to="/testimonials" className="block px-3 py-2 text-gray-700">Testimonials</Link>
-            <Link to="/faq" className="block px-3 py-2 text-gray-700">FAQ</Link>
-            <Link to="/contact" className="block px-3 py-2 text-gray-700">Contact</Link>
-            <Link to="/booking" className="block px-3 py-2 btn-secondary text-center">Book Now</Link>
-          </div>
-        </div>
-      )}
-    </nav>
+    </header>
   )
 }

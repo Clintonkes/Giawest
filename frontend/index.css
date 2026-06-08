@@ -1,60 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 :root {
-  --brand-brown: #6f4526;
-  --brand-brown-deep: #52311a;
-  --brand-brown-soft: #ead9c8;
-  --brand-green: #214d3f;
-  --brand-green-deep: #17382d;
-  --brand-cream: #f8f4ee;
-  --brand-charcoal: #201b17;
+  --brand-navy: #1F3A5F;
+  --brand-teal: #4FB6B0;
+  --brand-mint: #DDF5EE;
+  --brand-white: #FFFFFF;
+  --brand-gray: #E5E7EB;
 }
 
 * {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Manrope', sans-serif;
   scroll-behavior: smooth;
 }
 
 body {
   background:
-    radial-gradient(circle at top left, rgba(111, 69, 38, 0.08), transparent 30%),
-    radial-gradient(circle at top right, rgba(33, 77, 63, 0.08), transparent 26%),
-    linear-gradient(180deg, #fffdf9 0%, #f7f2ea 100%);
-  color: var(--brand-charcoal);
+    radial-gradient(circle at top left, rgba(79, 182, 176, 0.12), transparent 28%),
+    radial-gradient(circle at top right, rgba(31, 58, 95, 0.12), transparent 24%),
+    linear-gradient(180deg, #FFFFFF 0%, #DDF5EE 100%);
+  color: var(--brand-navy);
 }
 
 ::selection {
-  background: rgba(111, 69, 38, 0.18);
-  color: var(--brand-charcoal);
+  background: rgba(79, 182, 176, 0.22);
+  color: var(--brand-navy);
 }
 
 .btn-primary {
-  @apply bg-gradient-to-r from-blue-700 to-blue-800 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-105;
-  box-shadow: 0 12px 30px -18px rgba(111, 69, 38, 0.85);
+  @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold text-white transition-all duration-300;
+  background: linear-gradient(135deg, var(--brand-navy), var(--brand-teal));
+  box-shadow: 0 14px 30px -18px rgba(31, 58, 95, 0.7);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 36px -20px rgba(31, 58, 95, 0.8);
 }
 
 .btn-secondary {
-  @apply bg-gradient-to-r from-cyan-500 to-teal-500 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-105;
-  box-shadow: 0 12px 30px -18px rgba(33, 77, 63, 0.8);
+  @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition-all duration-300;
+  background: var(--brand-white);
+  color: var(--brand-navy);
+  border: 1px solid var(--brand-gray);
+  box-shadow: 0 14px 28px -22px rgba(31, 58, 95, 0.25);
 }
 
-.btn-accent {
-  @apply bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-105;
-  box-shadow: 0 12px 30px -18px rgba(67, 88, 69, 0.85);
+.btn-secondary:hover {
+  border-color: var(--brand-teal);
+  color: var(--brand-teal);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition-all duration-300;
+  color: var(--brand-navy);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.btn-ghost:hover {
+  border-color: var(--brand-teal);
+  background: rgba(221, 245, 238, 0.85);
 }
 
 .card {
-  @apply bg-white/85 backdrop-blur rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100;
+  @apply rounded-3xl border bg-white transition-all duration-300;
+  border-color: var(--brand-gray);
+  box-shadow: 0 24px 60px -44px rgba(31, 58, 95, 0.28);
 }
 
 .card-hover {
-  @apply transform transition-all duration-300 hover:-translate-y-1 hover:border-gray-200;
+  @apply transition-all duration-300;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: rgba(79, 182, 176, 0.4);
+  box-shadow: 0 28px 64px -42px rgba(31, 58, 95, 0.34);
 }
 
 .input-field {
-  @apply w-full px-4 py-3 rounded-lg border border-gray-200 bg-white/90 text-gray-900 placeholder:text-gray-400 focus:border-blue-700 focus:ring-2 focus:ring-blue-100 outline-none transition-all duration-200;
+  @apply w-full rounded-2xl border bg-white px-4 py-3 text-sm outline-none transition-all duration-200;
+  color: var(--brand-navy);
+  border-color: var(--brand-gray);
+}
+
+.input-field::placeholder {
+  color: rgba(31, 58, 95, 0.45);
+}
+
+.input-field:focus {
+  border-color: var(--brand-teal);
+  box-shadow: 0 0 0 4px rgba(79, 182, 176, 0.15);
+}
+
+.surface-mint {
+  background: linear-gradient(180deg, rgba(221, 245, 238, 0.8), rgba(255, 255, 255, 0.96));
+}
+
+.surface-navy {
+  background: linear-gradient(135deg, var(--brand-navy), rgba(31, 58, 95, 0.92));
+}
+
+.section-shell {
+  @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.eyebrow {
+  @apply inline-flex items-center gap-2 rounded-full border px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em];
+  color: var(--brand-navy);
+  border-color: rgba(79, 182, 176, 0.28);
+  background: rgba(221, 245, 238, 0.72);
+}
+
+@keyframes bubble-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(0, -12px, 0) scale(1.06);
+    opacity: 0.92;
+  }
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.98), rgba(221, 245, 238, 0.24) 40%, rgba(79, 182, 176, 0.08) 68%, rgba(255, 255, 255, 0.05) 100%);
+  box-shadow:
+    inset 0 0 14px rgba(255, 255, 255, 0.65),
+    0 12px 26px rgba(31, 58, 95, 0.08);
+  animation: bubble-float 6s ease-in-out infinite;
+  backdrop-filter: blur(2px);
 }

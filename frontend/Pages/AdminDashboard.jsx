@@ -23,27 +23,36 @@ function formatDate(value) {
   }).format(date)
 }
 
-function statusBadge(status) {
-  const normalized = String(status || '').toLowerCase()
-  if (normalized === 'completed') return 'bg-green-100 text-green-700'
-  if (normalized === 'approved') return 'bg-cyan-100 text-teal-700'
-  if (normalized === 'denied') return 'bg-red-100 text-red-700'
-  return 'bg-amber-100 text-amber-800'
+function badgeClasses(value) {
+  const normalized = String(value || '').toLowerCase()
+  if (normalized === 'completed') return 'bg-brand-navy text-white'
+  if (normalized === 'approved') return 'bg-brand-mint text-brand-navy'
+  if (normalized === 'denied') return 'bg-brand-gray text-brand-navy'
+  return 'bg-white text-brand-navy border border-brand-gray'
 }
 
-function readBadge(isRead) {
-  return isRead ? 'bg-green-100 text-green-700' : 'bg-cyan-100 text-teal-700'
+function readClasses(isRead) {
+  return isRead ? 'bg-brand-mint text-brand-navy' : 'bg-white text-brand-navy border border-brand-gray'
 }
 
 function isFinalBookingStatus(status) {
   return ['approved', 'completed', 'denied'].includes(String(status || '').toLowerCase())
 }
 
+function Detail({ label, value }) {
+  return (
+    <div className="rounded-2xl border border-brand-gray bg-brand-mint/55 p-4">
+      <div className="text-xs uppercase tracking-[0.22em] text-brand-navy/55">{label}</div>
+      <div className="mt-2 whitespace-pre-wrap text-sm text-brand-navy">{value}</div>
+    </div>
+  )
+}
+
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('dashboard')
+  const [activeTab, setActiveTab] = useState('overview')
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [authChecked, setAuthChecked] = useState(false)
+  const [authReady, setAuthReady] = useState(false)
   const [bookingsPage, setBookingsPage] = useState(1)
   const [messagesPage, setMessagesPage] = useState(1)
   const [bookingData, setBookingData] = useState(initialPageState)
@@ -57,13 +66,12 @@ export default function AdminDashboard() {
   })
   const [logoutModalOpen, setLogoutModalOpen] = useState(false)
   const navigate = useNavigate()
-
   const token = localStorage.getItem('token')
 
-  const loadDashboardCounts = async () => {
+  const loadCounts = async () => {
     const [bookings, messages] = await Promise.all([
-      api.get(`/bookings?page=1&limit=1`, token),
-      api.get(`/contact?page=1&limit=1`, token),
+      api.get('/bookings?page=1&limit=1', token),
+      api.get('/contact?page=1&limit=1', token),
     ])
     setCounts({
       bookings: bookings.total || 0,
@@ -74,8 +82,8 @@ export default function AdminDashboard() {
   const loadTabData = async () => {
     setLoading(true)
     try {
-      if (activeTab === 'dashboard') {
-        await loadDashboardCounts()
+      if (activeTab === 'overview') {
+        await loadCounts()
       } else if (activeTab === 'bookings') {
         const data = await api.get(`/bookings?page=${bookingsPage}&limit=${PAGE_SIZE}`, token)
         setBookingData(data)
@@ -84,68 +92,20 @@ export default function AdminDashboard() {
         setMessageData(data)
       }
     } catch (error) {
-      if (error.message?.includes('401')) {
+      if (String(error?.message || '').includes('401')) {
         localStorage.removeItem('token')
         navigate('/admin')
         return
       }
-      toast.error('Failed to load admin records')
+      toast.error('Failed to load admin data')
     } finally {
       setLoading(false)
     }
   }
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/admin')
-      return
-    }
-    setAuthChecked(true)
-  }, [navigate, token])
-
-  useEffect(() => {
-    if (!authChecked) return
-    loadTabData()
-  }, [activeTab, bookingsPage, messagesPage, authChecked])
-
-  const openRecord = async (type, record) => {
-    setModalState({ open: true, type, loading: true, data: null })
-    try {
-      let data = record
-      if (type === 'booking') {
-        data = await api.get(`/bookings/${record.id}`, token)
-      } else if (type === 'message') {
-        data = await api.get(`/contact/${record.id}`, token)
-      }
-      setModalState({ open: true, type, loading: false, data })
-      if (type === 'message') {
-        await refreshCurrentTab()
-      }
-    } catch (error) {
-      if (error.message?.includes('401')) {
-        localStorage.removeItem('token')
-        navigate('/admin')
-        return
-      }
-      toast.error('Failed to open record')
-      setModalState({ open: false, type: null, loading: false, data: null })
-    }
-  }
-
-  const handleLogout = () => {
-    setSidebarOpen(false)
-    setLogoutModalOpen(true)
-  }
-
-  const confirmLogout = () => {
-    localStorage.removeItem('token')
-    setLogoutModalOpen(false)
-    navigate('/admin')
-  }
-
   const refreshCurrentTab = async () => {
-    if (activeTab === 'dashboard') {
-      await loadDashboardCounts()
+    if (activeTab === 'overview') {
+      await loadCounts()
       return
     }
     if (activeTab === 'bookings') {
@@ -159,6 +119,25 @@ export default function AdminDashboard() {
     }
   }
 
+  const openRecord = async (type, record) => {
+    setModalState({ open: true, type, loading: true, data: null })
+    try {
+      let data = record
+      if (type === 'booking') data = await api.get(`/bookings/${record.id}`, token)
+      if (type === 'message') data = await api.get(`/contact/${record.id}`, token)
+      setModalState({ open: true, type, loading: false, data })
+      if (type === 'message') await refreshCurrentTab()
+    } catch (error) {
+      if (String(error?.message || '').includes('401')) {
+        localStorage.removeItem('token')
+        navigate('/admin')
+        return
+      }
+      toast.error('Failed to open record')
+      setModalState({ open: false, type: null, loading: false, data: null })
+    }
+  }
+
   const updateBookingStatus = async (bookingId, status) => {
     try {
       await api.patch(`/bookings/${bookingId}/status?status=${encodeURIComponent(status)}`, {}, token)
@@ -167,10 +146,7 @@ export default function AdminDashboard() {
       if (modalState.open && modalState.type === 'booking' && modalState.data?.id === bookingId) {
         setModalState((current) => ({
           ...current,
-          data: {
-            ...current.data,
-            status,
-          },
+          data: { ...current.data, status },
         }))
       }
     } catch (error) {
@@ -178,76 +154,50 @@ export default function AdminDashboard() {
     }
   }
 
-  const closeModal = () => {
-    setModalState({ open: false, type: null, loading: false, data: null })
-  }
-
-  const Pagination = ({ pageState, onPrev, onNext }) => (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 mt-4">
-      <p className="text-sm text-gray-600">
-        Page {pageState.page} of {pageState.total_pages} · {pageState.total} total records
-      </p>
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={onPrev}
-          disabled={pageState.page <= 1}
-          className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 disabled:opacity-40"
-        >
-          Previous
-        </button>
-        <button
-          type="button"
-          onClick={onNext}
-          disabled={pageState.page >= pageState.total_pages}
-          className="px-4 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 disabled:opacity-40"
-        >
-          Next
-        </button>
-      </div>
-    </div>
-  )
-
-  const renderDashboard = () => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div className="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100">
-        <div className="text-4xl mb-2">📅</div>
-        <h3 className="font-bold text-gray-900 mb-2">Total Bookings</h3>
-        <p className="text-3xl font-bold text-blue-700">{counts.bookings}</p>
-      </div>
-      <div className="bg-white rounded-2xl p-6 text-center shadow-sm border border-gray-100">
-        <div className="text-4xl mb-2">✉️</div>
-        <h3 className="font-bold text-gray-900 mb-2">Contact Messages</h3>
-        <p className="text-3xl font-bold text-teal-700">{counts.messages}</p>
-      </div>
-    </div>
-  )
-
-  const renderBookingActions = (booking) => {
-    if (isFinalBookingStatus(booking.status)) {
-      return null
+  useEffect(() => {
+    if (!token) {
+      navigate('/admin')
+      return
     }
+    setAuthReady(true)
+  }, [navigate, token])
 
-    return (
-      <div className="flex flex-wrap justify-end gap-2">
-        <button type="button" onClick={() => updateBookingStatus(booking.id, 'approved')} className="btn-secondary text-xs px-3 py-2">
-          Approve
-        </button>
-        <button type="button" onClick={() => updateBookingStatus(booking.id, 'completed')} className="btn-accent text-xs px-3 py-2">
-          Complete
-        </button>
-        <button type="button" onClick={() => updateBookingStatus(booking.id, 'denied')} className="px-3 py-2 rounded-lg bg-red-600 text-white text-xs font-semibold hover:bg-red-700">
-          Deny
-        </button>
+  useEffect(() => {
+    if (!authReady) return
+    loadTabData()
+  }, [activeTab, bookingsPage, messagesPage, authReady])
+
+  const sidebarItems = [
+    { id: 'overview', label: 'Overview' },
+    { id: 'bookings', label: 'Bookings' },
+    { id: 'messages', label: 'Messages' },
+  ]
+
+  const renderOverview = () => (
+    <div className="grid gap-6 md:grid-cols-3">
+      <div className="card p-6 text-center">
+        <div className="text-4xl">📦</div>
+        <div className="mt-3 text-lg font-bold text-brand-navy">Total Bookings</div>
+        <div className="mt-2 text-4xl font-extrabold text-brand-navy">{counts.bookings}</div>
       </div>
-    )
-  }
+      <div className="card p-6 text-center">
+        <div className="text-4xl">✉️</div>
+        <div className="mt-3 text-lg font-bold text-brand-navy">Contact Messages</div>
+        <div className="mt-2 text-4xl font-extrabold text-brand-navy">{counts.messages}</div>
+      </div>
+      <div className="card p-6 text-center">
+        <div className="text-4xl">✨</div>
+        <div className="mt-3 text-lg font-bold text-brand-navy">Service Style</div>
+        <div className="mt-2 text-base font-semibold text-brand-teal">Premium cleaning</div>
+      </div>
+    </div>
+  )
 
   const renderBookings = () => (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="card overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-[760px] w-full text-left">
-          <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide">
+          <thead className="bg-brand-mint/70 text-xs uppercase tracking-[0.22em] text-brand-navy/60">
             <tr>
               <th className="px-4 py-3">Customer</th>
               <th className="px-4 py-3">Service</th>
@@ -256,33 +206,45 @@ export default function AdminDashboard() {
               <th className="px-4 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-brand-gray">
             {bookingData.items.map((booking) => (
-              <tr key={booking.id} className="hover:bg-gray-50">
+              <tr key={booking.id} className="hover:bg-brand-mint/35">
                 <td className="px-4 py-4">
-                  <div className="font-semibold text-gray-900">{booking.full_name}</div>
-                  <div className="text-sm text-gray-500">{booking.email}</div>
+                  <div className="font-semibold text-brand-navy">{booking.full_name}</div>
+                  <div className="text-sm text-brand-navy/60">{booking.email}</div>
                 </td>
-                <td className="px-4 py-4 text-sm text-gray-700">{booking.service_type}</td>
+                <td className="px-4 py-4 text-sm text-brand-navy/80">{booking.service_type}</td>
                 <td className="px-4 py-4">
-                  <span className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${statusBadge(booking.status)}`}>
-                    {booking.status}
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${badgeClasses(booking.status)}`}>
+                    {booking.status || 'pending'}
                   </span>
                 </td>
-                <td className="px-4 py-4 text-sm text-gray-600">{formatDate(booking.created_at)}</td>
+                <td className="px-4 py-4 text-sm text-brand-navy/65">{formatDate(booking.created_at)}</td>
                 <td className="px-4 py-4">
-                  <div className="flex flex-col items-end gap-2 sm:flex-row sm:flex-wrap">
-                    <button type="button" onClick={() => openRecord('booking', booking)} className="px-3 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700">
+                  <div className="flex justify-end gap-2">
+                    <button type="button" onClick={() => openRecord('booking', booking)} className="btn-secondary px-4 py-2 text-sm">
                       View
                     </button>
-                    {renderBookingActions(booking)}
+                    {!isFinalBookingStatus(booking.status) && (
+                      <>
+                        <button type="button" onClick={() => updateBookingStatus(booking.id, 'approved')} className="btn-primary px-4 py-2 text-sm">
+                          Approve
+                        </button>
+                        <button type="button" onClick={() => updateBookingStatus(booking.id, 'completed')} className="btn-secondary px-4 py-2 text-sm">
+                          Complete
+                        </button>
+                        <button type="button" onClick={() => updateBookingStatus(booking.id, 'denied')} className="rounded-full border border-brand-gray bg-white px-4 py-2 text-sm font-semibold text-brand-navy transition hover:bg-brand-mint">
+                          Deny
+                        </button>
+                      </>
+                    )}
                   </div>
                 </td>
               </tr>
             ))}
             {bookingData.items.length === 0 && (
               <tr>
-                <td colSpan="5" className="px-4 py-10 text-center text-gray-500">
+                <td colSpan="5" className="px-4 py-10 text-center text-brand-navy/60">
                   No bookings found
                 </td>
               </tr>
@@ -290,7 +252,7 @@ export default function AdminDashboard() {
           </tbody>
         </table>
       </div>
-      <div className="p-4 border-t border-gray-100">
+      <div className="border-t border-brand-gray p-4">
         <Pagination
           pageState={bookingData}
           onPrev={() => setBookingsPage((current) => Math.max(current - 1, 1))}
@@ -301,10 +263,10 @@ export default function AdminDashboard() {
   )
 
   const renderMessages = () => (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className="card overflow-hidden">
       <div className="overflow-x-auto">
         <table className="min-w-[760px] w-full text-left">
-          <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide">
+          <thead className="bg-brand-mint/70 text-xs uppercase tracking-[0.22em] text-brand-navy/60">
             <tr>
               <th className="px-4 py-3">Sender</th>
               <th className="px-4 py-3">Subject</th>
@@ -313,32 +275,30 @@ export default function AdminDashboard() {
               <th className="px-4 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-brand-gray">
             {messageData.items.map((message) => (
-              <tr key={message.id} className="hover:bg-gray-50">
+              <tr key={message.id} className="hover:bg-brand-mint/35">
                 <td className="px-4 py-4">
-                  <div className="font-semibold text-gray-900">{message.name}</div>
-                  <div className="text-sm text-gray-500">{message.email}</div>
+                  <div className="font-semibold text-brand-navy">{message.name}</div>
+                  <div className="text-sm text-brand-navy/60">{message.email}</div>
                 </td>
-                <td className="px-4 py-4 text-sm text-gray-700">{message.subject}</td>
+                <td className="px-4 py-4 text-sm text-brand-navy/80">{message.subject}</td>
                 <td className="px-4 py-4">
-                  <span className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${readBadge(message.is_responded)}`}>
+                  <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${readClasses(message.is_responded)}`}>
                     {message.is_responded ? 'Read' : 'Unread'}
                   </span>
                 </td>
-                <td className="px-4 py-4 text-sm text-gray-600">{formatDate(message.created_at)}</td>
-                <td className="px-4 py-4">
-                  <div className="flex justify-end gap-2">
-                    <button type="button" onClick={() => openRecord('message', message)} className="px-3 py-2 rounded-lg border border-gray-200 text-sm font-medium text-gray-700">
-                      View
-                    </button>
-                  </div>
+                <td className="px-4 py-4 text-sm text-brand-navy/65">{formatDate(message.created_at)}</td>
+                <td className="px-4 py-4 text-right">
+                  <button type="button" onClick={() => openRecord('message', message)} className="btn-secondary px-4 py-2 text-sm">
+                    View
+                  </button>
                 </td>
               </tr>
             ))}
             {messageData.items.length === 0 && (
               <tr>
-                <td colSpan="5" className="px-4 py-10 text-center text-gray-500">
+                <td colSpan="5" className="px-4 py-10 text-center text-brand-navy/60">
                   No messages found
                 </td>
               </tr>
@@ -346,7 +306,7 @@ export default function AdminDashboard() {
           </tbody>
         </table>
       </div>
-      <div className="p-4 border-t border-gray-100">
+      <div className="border-t border-brand-gray p-4">
         <Pagination
           pageState={messageData}
           onPrev={() => setMessagesPage((current) => Math.max(current - 1, 1))}
@@ -357,105 +317,87 @@ export default function AdminDashboard() {
   )
 
   const renderContent = useMemo(() => {
-    if (activeTab === 'dashboard') return renderDashboard()
+    if (activeTab === 'overview') return renderOverview()
     if (activeTab === 'bookings') return renderBookings()
     if (activeTab === 'messages') return renderMessages()
     return null
   }, [activeTab, bookingData, messageData, counts])
 
-  if (!authChecked) {
-    return null
-  }
+  if (!authReady) return null
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="md:hidden sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-200 px-4 py-3 flex items-center justify-between">
-        <button type="button" onClick={() => setSidebarOpen(true)} className="px-3 py-2 rounded-lg border border-gray-200 text-gray-700">
-          Menu
-        </button>
-        <div className="font-bold text-gray-900">Okri Admin</div>
-        <button type="button" onClick={handleLogout} className="text-sm font-semibold text-red-600">
-          Logout
-        </button>
+    <div className="min-h-screen bg-brand-mint/35">
+      <div className="sticky top-0 z-40 border-b border-brand-gray bg-white/90 px-4 py-3 backdrop-blur md:hidden">
+        <div className="flex items-center justify-between">
+          <button type="button" onClick={() => setSidebarOpen(true)} className="rounded-full border border-brand-gray bg-white px-4 py-2 text-sm font-semibold text-brand-navy">
+            Menu
+          </button>
+          <div className="font-bold text-brand-navy">Admin Dashboard</div>
+          <button type="button" onClick={() => setLogoutModalOpen(true)} className="text-sm font-semibold text-brand-teal">
+            Logout
+          </button>
+        </div>
       </div>
 
       {sidebarOpen && (
-        <button
-          type="button"
-          aria-label="Close sidebar"
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
+        <button type="button" aria-label="Close sidebar" className="fixed inset-0 z-40 bg-brand-navy/45 md:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
       <div className="flex">
         <aside
-          className={`fixed md:static inset-y-0 left-0 z-50 w-72 bg-white shadow-xl md:shadow-md border-r border-gray-100 transform transition-transform duration-300 md:translate-x-0 ${
+          className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-brand-gray bg-white shadow-xl transition-transform duration-300 md:static md:translate-x-0 ${
             sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
           }`}
         >
-          <div className="p-6 h-full flex flex-col">
-            <div className="flex items-start justify-between gap-4 mb-8">
+          <div className="flex h-full flex-col p-6">
+            <div className="mb-8 flex items-center justify-between gap-4">
               <div>
-                <h2 className="text-xl font-bold bg-gradient-to-r from-blue-700 to-teal-500 bg-clip-text text-transparent">
-                  Okri Admin
-                </h2>
-                <p className="text-sm text-gray-500 mt-1">Management console</p>
+                <div className="text-sm font-extrabold uppercase tracking-[0.22em] text-brand-navy">Giawest Cleaning</div>
+                <div className="text-xs text-brand-teal">Admin console</div>
               </div>
-              <button
-                type="button"
-                onClick={() => setSidebarOpen(false)}
-                className="md:hidden text-gray-500 hover:text-gray-900"
-                aria-label="Close menu"
-              >
-                ✕
+              <button type="button" onClick={() => setSidebarOpen(false)} className="text-2xl leading-none text-brand-navy md:hidden">
+                ×
               </button>
             </div>
 
             <nav className="space-y-2">
-              {[
-                ['dashboard', 'Dashboard'],
-                ['bookings', 'Bookings'],
-                ['messages', 'Contact Messages'],
-              ].map(([key, label]) => (
+              {sidebarItems.map((item) => (
                 <button
-                  key={key}
+                  key={item.id}
                   type="button"
                   onClick={() => {
-                    setActiveTab(key)
+                    setActiveTab(item.id)
                     setSidebarOpen(false)
                   }}
-                  className={`w-full text-left px-4 py-3 rounded-xl transition-colors ${
-                    activeTab === key ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:bg-gray-50'
+                  className={`w-full rounded-2xl px-4 py-3 text-left text-sm font-semibold transition ${
+                    activeTab === item.id ? 'bg-brand-mint text-brand-navy' : 'text-brand-navy/72 hover:bg-brand-mint/55'
                   }`}
                 >
-                  {label}
+                  {item.label}
                 </button>
               ))}
             </nav>
 
-            <div className="mt-auto pt-6">
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="w-full text-left px-4 py-3 rounded-xl text-red-600 hover:bg-red-50 font-semibold"
-              >
-                Logout
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setLogoutModalOpen(true)}
+              className="mt-auto rounded-2xl border border-brand-gray bg-white px-4 py-3 text-left text-sm font-semibold text-brand-navy hover:bg-brand-mint/55"
+            >
+              Logout
+            </button>
           </div>
         </aside>
 
-        <main className="flex-1 min-h-screen p-4 md:p-8 md:ml-0">
-          <div className="hidden md:flex items-center justify-between mb-6">
+        <main className="flex-1 p-4 md:p-8">
+          <div className="mb-6 hidden items-center justify-between md:flex">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 capitalize">{activeTab.replace('-', ' ')}</h1>
-              <p className="text-gray-600">Manage bookings and messages.</p>
+              <h1 className="text-2xl font-extrabold text-brand-navy capitalize">{activeTab}</h1>
+              <p className="text-brand-navy/65">Manage bookings and contact messages.</p>
             </div>
           </div>
 
           {loading ? (
-            <div className="py-20 text-center text-gray-600">Loading...</div>
+            <div className="py-20 text-center text-brand-navy/65">Loading...</div>
           ) : (
             renderContent
           )}
@@ -463,28 +405,27 @@ export default function AdminDashboard() {
       </div>
 
       {modalState.open && (
-        <div className="fixed inset-0 z-[60] bg-black/50 flex items-end md:items-center justify-center p-0 md:p-4">
-          <div className="bg-white w-full max-w-none md:w-full md:max-w-2xl rounded-t-3xl md:rounded-3xl shadow-2xl max-h-[92vh] overflow-hidden">
+        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-brand-navy/55 p-0 md:items-center md:p-4">
+          <div className="max-h-[92vh] w-full max-w-none overflow-hidden rounded-t-[2rem] bg-white shadow-2xl md:max-w-2xl md:rounded-[2rem]">
             {modalState.loading ? (
-              <div className="p-8 text-center text-gray-600">Loading...</div>
+              <div className="p-8 text-center text-brand-navy/65">Loading...</div>
             ) : (
-              <div className="max-h-[92vh] overflow-y-auto p-5 sm:p-6 md:p-8">
-                <div className="flex items-start justify-between gap-4 mb-6">
+              <div className="max-h-[92vh] overflow-y-auto p-6 sm:p-8">
+                <div className="mb-6 flex items-start justify-between gap-4">
                   <div>
-                    <h3 className="text-2xl font-bold text-gray-900">
-                      {modalState.type === 'booking' && 'Booking Details'}
-                      {modalState.type === 'message' && 'Contact Message'}
-                    </h3>
-                    <p className="text-gray-500 text-sm mt-1">Detailed view for the selected record.</p>
+                    <h2 className="text-2xl font-extrabold text-brand-navy">
+                      {modalState.type === 'booking' ? 'Booking Details' : 'Contact Message'}
+                    </h2>
+                    <p className="mt-1 text-sm text-brand-navy/60">Detailed record view.</p>
                   </div>
-                  <button type="button" onClick={closeModal} className="text-gray-500 hover:text-gray-900 text-2xl leading-none">
+                  <button type="button" onClick={() => setModalState({ open: false, type: null, loading: false, data: null })} className="text-3xl leading-none text-brand-navy/55">
                     ×
                   </button>
                 </div>
 
                 {modalState.type === 'booking' && modalState.data && (
                   <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid gap-4 md:grid-cols-2">
                       <Detail label="Name" value={modalState.data.full_name} />
                       <Detail label="Email" value={modalState.data.email} />
                       <Detail label="Phone" value={modalState.data.phone} />
@@ -497,13 +438,13 @@ export default function AdminDashboard() {
                     <div className="flex flex-wrap gap-3 pt-2">
                       {!isFinalBookingStatus(modalState.data.status) && (
                         <>
-                          <button type="button" onClick={() => updateBookingStatus(modalState.data.id, 'approved')} className="btn-secondary">
+                          <button type="button" onClick={() => updateBookingStatus(modalState.data.id, 'approved')} className="btn-primary">
                             Approve
                           </button>
-                          <button type="button" onClick={() => updateBookingStatus(modalState.data.id, 'completed')} className="btn-accent">
+                          <button type="button" onClick={() => updateBookingStatus(modalState.data.id, 'completed')} className="btn-secondary">
                             Complete
                           </button>
-                          <button type="button" onClick={() => updateBookingStatus(modalState.data.id, 'denied')} className="px-4 py-3 rounded-full bg-red-600 text-white font-semibold hover:bg-red-700">
+                          <button type="button" onClick={() => updateBookingStatus(modalState.data.id, 'denied')} className="rounded-full border border-brand-gray bg-white px-5 py-3 font-semibold text-brand-navy hover:bg-brand-mint">
                             Deny
                           </button>
                         </>
@@ -514,19 +455,18 @@ export default function AdminDashboard() {
 
                 {modalState.type === 'message' && modalState.data && (
                   <div className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="grid gap-4 md:grid-cols-2">
                       <Detail label="Name" value={modalState.data.name} />
                       <Detail label="Email" value={modalState.data.email} />
                       <Detail label="Phone" value={modalState.data.phone || 'Not provided'} />
                       <Detail label="Subject" value={modalState.data.subject} />
                     </div>
                     <Detail label="Message" value={modalState.data.message} />
-                    <div className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold ${readBadge(modalState.data.is_responded)}`}>
+                    <span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${readClasses(modalState.data.is_responded)}`}>
                       {modalState.data.is_responded ? 'Read' : 'Unread'}
-                    </div>
+                    </span>
                   </div>
                 )}
-
               </div>
             )}
           </div>
@@ -534,25 +474,29 @@ export default function AdminDashboard() {
       )}
 
       {logoutModalOpen && (
-        <div className="fixed inset-0 z-[70] bg-black/60 flex items-center justify-center p-4">
-          <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl">
+        <div className="fixed inset-0 z-[70] flex items-center justify-center bg-brand-navy/60 p-4">
+          <div className="w-full max-w-md rounded-[2rem] bg-white shadow-2xl">
             <div className="p-6 sm:p-8">
-              <h3 className="text-2xl font-bold text-gray-900">Log out?</h3>
-              <p className="mt-2 text-sm leading-6 text-gray-600">
+              <h2 className="text-2xl font-extrabold text-brand-navy">Log out?</h2>
+              <p className="mt-2 text-sm leading-6 text-brand-navy/65">
                 You will be signed out of the admin area and returned to the login screen.
               </p>
               <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                 <button
                   type="button"
                   onClick={() => setLogoutModalOpen(false)}
-                  className="rounded-xl border border-gray-200 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+                  className="rounded-full border border-brand-gray bg-white px-4 py-3 text-sm font-semibold text-brand-navy hover:bg-brand-mint"
                 >
                   Cancel
                 </button>
                 <button
                   type="button"
-                  onClick={confirmLogout}
-                  className="rounded-xl bg-red-600 px-4 py-3 text-sm font-semibold text-white hover:bg-red-700"
+                  onClick={() => {
+                    localStorage.removeItem('token')
+                    setLogoutModalOpen(false)
+                    navigate('/admin')
+                  }}
+                  className="btn-primary"
                 >
                   Log out
                 </button>
@@ -565,11 +509,30 @@ export default function AdminDashboard() {
   )
 }
 
-function Detail({ label, value }) {
+function Pagination({ pageState, onPrev, onNext }) {
   return (
-    <div className="rounded-2xl border border-gray-100 bg-gray-50 p-4">
-      <div className="text-xs uppercase tracking-wide text-gray-500 mb-1">{label}</div>
-      <div className="text-sm text-gray-900 whitespace-pre-wrap">{value}</div>
+    <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
+      <p className="text-sm text-brand-navy/65">
+        Page {pageState.page} of {pageState.total_pages} · {pageState.total} total records
+      </p>
+      <div className="flex items-center gap-2">
+        <button
+          type="button"
+          onClick={onPrev}
+          disabled={pageState.page <= 1}
+          className="rounded-full border border-brand-gray bg-white px-4 py-2 text-sm font-semibold text-brand-navy disabled:opacity-40"
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          onClick={onNext}
+          disabled={pageState.page >= pageState.total_pages}
+          className="rounded-full border border-brand-gray bg-white px-4 py-2 text-sm font-semibold text-brand-navy disabled:opacity-40"
+        >
+          Next
+        </button>
+      </div>
     </div>
   )
 }

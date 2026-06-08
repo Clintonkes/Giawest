@@ -1,11 +1,11 @@
 const services = [
-  { id: 1, title: "Residential Cleaning", description: "Complete home cleaning services tailored to your needs", icon: "🏠" },
-  { id: 2, title: "Commercial Cleaning", description: "Professional office and business space cleaning", icon: "🏢" },
-  { id: 3, title: "Deep Cleaning", description: "Thorough deep clean for neglected spaces", icon: "✨" },
-  { id: 4, title: "Move-in/Move-out", description: "Comprehensive cleaning for moving transitions", icon: "📦" },
-  { id: 5, title: "Post-construction", description: "Specialized cleanup after construction projects", icon: "🔨" },
-  { id: 6, title: "Recurring Maintenance", description: "Scheduled cleaning for consistent freshness", icon: "📅" }
+  { id: 1, title: 'Residential Cleaning', description: 'Detailed home cleaning for everyday upkeep', icon: 'home-clean' },
+  { id: 2, title: 'Office Cleaning', description: 'Professional workspace cleaning and surface care', icon: 'office-clean' },
+  { id: 3, title: 'Deep Cleaning', description: 'Intensive cleaning for kitchens, bathrooms, and high-touch areas', icon: 'deep-clean' },
+  { id: 4, title: 'Move-In / Move-Out', description: 'Thorough cleanup for property transitions and turnovers', icon: 'move-clean' },
+  { id: 5, title: 'Commercial Cleaning', description: 'Recurring support for teams and business spaces', icon: 'commercial' },
+  { id: 6, title: 'Sanitization Service', description: 'Targeted sanitation before and after busy periods', icon: 'sanitize' },
 ]
 
 export const getServices = () => services
-export const getServiceById = (id) => services.find(s => s.id === id)
+export const getServiceById = (id) => services.find((service) => service.id === id)
