@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { api } from '../services/api'
-import { serviceDetails } from '../data/laundrySite'
+import { serviceDetails } from '../data/siteContent'
 import toast from 'react-hot-toast'
 
 export default function Booking() {
@@ -123,7 +123,7 @@ export default function Booking() {
                   </div>
                   <input
                     type="text"
-                    placeholder="Pickup / delivery address"
+                    placeholder="Service address"
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     className="input-field"

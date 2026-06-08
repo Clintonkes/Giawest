@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { faqs } from '../data/laundrySite'
+import { faqs } from '../data/siteContent'
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0)

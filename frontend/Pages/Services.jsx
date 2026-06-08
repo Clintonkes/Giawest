@@ -2,8 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { LaundryIcon } from '../components/LaundryIcons'
-import { serviceDetails } from '../data/laundrySite'
+import { ServiceIcon } from '../components/ServiceIcons'
+import { serviceDetails } from '../data/siteContent'
 
 export default function Services() {
   return (
@@ -26,7 +26,7 @@ export default function Services() {
               {serviceDetails.map((service) => (
                 <article key={service.title} className="card card-hover p-6">
                   <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-mint text-brand-navy">
-                    <LaundryIcon name={service.icon} />
+                    <ServiceIcon name={service.icon} />
                   </div>
                   <h2 className="text-xl font-bold text-brand-navy">{service.title}</h2>
                   <p className="mt-3 text-sm leading-7 text-brand-navy/68">{service.summary}</p>

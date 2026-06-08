@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { brand, contact, navLinks, serviceHighlights } from '../data/laundrySite'
+import { brand, contact, navLinks, serviceHighlights } from '../data/siteContent'
 
 export default function Footer() {
   return (
@@ -22,7 +22,7 @@ export default function Footer() {
               {brand.tagline}
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              {['Fast turnaround', 'Premium finishing', 'Pickup & delivery'].map((item) => (
+              {['Fast turnaround', 'Premium finishing', 'On-site service'].map((item) => (
                 <span key={item} className="rounded-full border border-white/15 bg-white/6 px-4 py-2 text-xs font-semibold text-white/82">
                   {item}
                 </span>
@@ -64,14 +64,14 @@ export default function Footer() {
               <p>{contact.address}</p>
             </div>
             <Link to="/booking" className="btn-secondary mt-6 inline-flex">
-              Schedule Pickup
+              Schedule Service
             </Link>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-white/65 md:flex-row md:items-center md:justify-between">
           <p>&copy; {new Date().getFullYear()} {brand.shortName}. All rights reserved.</p>
-              <p>Premium cleaning care with a calm, polished experience.</p>
+          <p>Premium cleaning care with a calm, polished experience.</p>
         </div>
       </div>
     </footer>

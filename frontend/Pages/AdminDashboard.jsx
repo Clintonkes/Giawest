@@ -195,7 +195,7 @@ export default function AdminDashboard() {
 
   const renderBookings = () => (
     <div className="card overflow-hidden">
-      <div className="overflow-x-auto">
+      <div className="max-h-[calc(100vh-260px)] overflow-auto md:max-h-none">
         <table className="min-w-[760px] w-full text-left">
           <thead className="bg-brand-mint/70 text-xs uppercase tracking-[0.22em] text-brand-navy/60">
             <tr>
@@ -264,7 +264,7 @@ export default function AdminDashboard() {
 
   const renderMessages = () => (
     <div className="card overflow-hidden">
-      <div className="overflow-x-auto">
+      <div className="max-h-[calc(100vh-260px)] overflow-auto md:max-h-none">
         <table className="min-w-[760px] w-full text-left">
           <thead className="bg-brand-mint/70 text-xs uppercase tracking-[0.22em] text-brand-navy/60">
             <tr>
@@ -405,12 +405,12 @@ export default function AdminDashboard() {
       </div>
 
       {modalState.open && (
-        <div className="fixed inset-0 z-[60] flex items-end justify-center bg-brand-navy/55 p-0 md:items-center md:p-4">
-          <div className="max-h-[92vh] w-full max-w-none overflow-hidden rounded-t-[2rem] bg-white shadow-2xl md:max-w-2xl md:rounded-[2rem]">
+      <div className="fixed inset-0 z-[60] flex items-end justify-center bg-brand-navy/55 p-3 md:items-center md:p-4">
+          <div className="max-h-[90vh] w-full max-w-none overflow-hidden rounded-[1.5rem] bg-white shadow-2xl md:max-w-2xl md:rounded-[2rem]">
             {modalState.loading ? (
               <div className="p-8 text-center text-brand-navy/65">Loading...</div>
             ) : (
-              <div className="max-h-[92vh] overflow-y-auto p-6 sm:p-8">
+              <div className="max-h-[90vh] overflow-y-auto p-5 sm:p-8">
                 <div className="mb-6 flex items-start justify-between gap-4">
                   <div>
                     <h2 className="text-2xl font-extrabold text-brand-navy">

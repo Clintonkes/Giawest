@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { api } from '../services/api'
-import { contact } from '../data/laundrySite'
+import { contact } from '../data/siteContent'
 import toast from 'react-hot-toast'
 
 export default function Contact() {

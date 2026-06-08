@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { brand, navLinks } from '../data/laundrySite'
+import { brand, navLinks } from '../data/siteContent'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = React.useState(false)
@@ -37,9 +37,6 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
-            <NavLink to="/admin" className="btn-ghost ml-2 text-sm">
-              Admin
-            </NavLink>
             <NavLink to="/booking" className="btn-primary ml-2 text-sm">
               Book Now
             </NavLink>
@@ -79,9 +76,6 @@ export default function Navbar() {
                     {link.label}
                   </NavLink>
                 ))}
-                <NavLink to="/admin" onClick={() => setIsOpen(false)} className="rounded-2xl px-4 py-3 text-sm font-semibold text-brand-navy hover:bg-brand-mint/70">
-                  Admin Login
-                </NavLink>
                 <Link to="/booking" onClick={() => setIsOpen(false)} className="btn-primary mt-2">
                   Book Now
                 </Link>

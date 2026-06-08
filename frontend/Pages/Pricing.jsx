@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import { pricingPlans } from '../data/laundrySite'
+import { pricingPlans } from '../data/siteContent'
 
 export default function Pricing() {
   return (

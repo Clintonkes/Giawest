@@ -8,16 +8,11 @@ const baseProps = {
   strokeLinejoin: 'round',
 }
 
-function wrap(children) {
-  return <svg {...baseProps} aria-hidden="true" className="h-6 w-6">{children}</svg>
-}
-
-export function LaundryIcon({ name, className = '' }) {
+export function ServiceIcon({ name, className = '' }) {
   const props = { ...baseProps, className: `h-6 w-6 ${className}`.trim() }
 
   switch (name) {
     case 'home-clean':
-    case 'wash-fold':
       return (
         <svg {...props}>
           <path d="M4 7.5h16v11H4z" />
@@ -28,7 +23,6 @@ export function LaundryIcon({ name, className = '' }) {
         </svg>
       )
     case 'office-clean':
-    case 'dry-clean':
       return (
         <svg {...props}>
           <path d="M9 4.8 6.5 9.3l2.7 1.6L12 7.6l2.8 3.3 2.7-1.6L15 4.8" />
@@ -37,7 +31,6 @@ export function LaundryIcon({ name, className = '' }) {
         </svg>
       )
     case 'deep-clean':
-    case 'iron':
       return (
         <svg {...props}>
           <path d="M5 15h14l-1.5-6h-8.3a4.2 4.2 0 0 0-3.7 2.2L5 15Z" />
@@ -46,7 +39,6 @@ export function LaundryIcon({ name, className = '' }) {
         </svg>
       )
     case 'move-clean':
-    case 'delivery':
       return (
         <svg {...props}>
           <path d="M3.5 8.5h10v7h-10z" />
@@ -65,7 +57,6 @@ export function LaundryIcon({ name, className = '' }) {
         </svg>
       )
     case 'sanitize':
-    case 'stain':
       return (
         <svg {...props}>
           <path d="M12 3 5 10a7 7 0 0 0 14 0l-7-7Z" />
@@ -106,7 +97,7 @@ export function LaundryIcon({ name, className = '' }) {
 export function BadgeIcon({ name }) {
   return (
     <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-brand-gray bg-brand-white text-brand-teal">
-      <LaundryIcon name={name} className="h-5 w-5" />
+      <ServiceIcon name={name} className="h-5 w-5" />
     </span>
   )
 }
