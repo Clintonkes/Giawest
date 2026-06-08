@@ -54,7 +54,7 @@ okri-consult/
 Backend `.env`:
 ```
 SECRET_KEY=your-secret-key
-ADMIN_EMAIL=okriconsult@proton.me
+ADMIN_EMAIL=louweisheitllc@proton.me
 ADMIN_PASSWORD=your-secure-password
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxx
 RESEND_FROM_EMAIL=Okri Consult <no-reply@yourdomain.com>

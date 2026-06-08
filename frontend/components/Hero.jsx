@@ -58,7 +58,7 @@ export default function Hero() {
                   <BadgeIcon name="shield" />
                   <div>
                     <div className="text-sm font-bold text-brand-navy">Premium finish</div>
-                    <div className="text-xs text-brand-navy/60">Press, fold, and pack</div>
+                    <div className="text-xs text-brand-navy/60">Detailed, polished results</div>
                   </div>
                 </div>
               </div>

@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     RESEND_FROM_NAME: str = os.getenv("RESEND_FROM_NAME", "Okri Consult LLC")
     PUBLIC_SITE_URL: str = os.getenv("PUBLIC_SITE_URL", "http://localhost:8000")
 
-    ADMIN_EMAIL: str = os.getenv("ADMIN_EMAIL", "okriconsult@proton.me")
+    ADMIN_EMAIL: str = os.getenv("ADMIN_EMAIL", "louweisheitllc@proton.me")
     ADMIN_PASSWORD: str = os.getenv("ADMIN_PASSWORD", "change-this-password")
 
 settings = Settings()

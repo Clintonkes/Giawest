@@ -5,16 +5,15 @@ export const brand = {
 }
 
 export const contact = {
-  phone: '+1 (213) 909-1217',
-  email: 'okriconsult@proton.me',
-  address: '700 N Inglewood Ave Apt 1, Inglewood CA 90302',
+  phone: '+1 (305) 804-6539',
+  email: 'louweisheitllc@proton.me',
+  address: '10609 Hammocks blvd apt 133 Miami FL 33196',
 }
 
 export const navLinks = [
   { label: 'Home', to: '/' },
   { label: 'About', to: '/about' },
   { label: 'Services', to: '/services' },
-  { label: 'Plans', to: '/pricing' },
   { label: 'Booking', to: '/booking' },
   { label: 'Testimonials', to: '/testimonials' },
   { label: 'FAQ', to: '/faq' },
@@ -91,31 +90,6 @@ export const processSteps = [
     step: '03',
     title: 'Review and relax',
     description: 'Your space is left polished, fresh, and ready for immediate use.',
-  },
-]
-
-export const pricingPlans = [
-  {
-    name: 'Essential Clean',
-    price: 'From $89',
-    description: 'For recurring home cleaning and small spaces that need reliable upkeep.',
-    features: ['Standard clean', 'Kitchen and bath refresh', '48-hour turnaround', 'Text updates'],
-    cta: 'Book Essential Clean',
-  },
-  {
-    name: 'Signature Clean',
-    price: 'From $149',
-    description: 'Best for deeper home or office cleaning with more attention to detail.',
-    features: ['Deep clean focus', 'High-touch sanitization', 'Floor care', 'Priority scheduling'],
-    cta: 'Choose Signature Clean',
-    featured: true,
-  },
-  {
-    name: 'Business Care',
-    price: 'Custom',
-    description: 'Cleaning support for offices, retail spaces, facilities, and property managers.',
-    features: ['Recurring visits', 'Invoice support', 'Dedicated schedule', 'Priority handling'],
-    cta: 'Request Business Quote',
   },
 ]
 
@@ -213,7 +187,7 @@ export const serviceDetails = [
   {
     title: 'Commercial Cleaning',
     summary: 'High-volume support for businesses that need dependable recurring cleaning.',
-    points: ['Recurring plans', 'Bulk handling', 'Consistent turnaround'],
+    points: ['Recurring service', 'Bulk handling', 'Consistent turnaround'],
     icon: 'commercial',
   },
   {

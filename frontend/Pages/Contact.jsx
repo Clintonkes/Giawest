@@ -96,7 +96,7 @@ export default function Contact() {
               <div className="card p-6">
                 <h2 className="text-xl font-bold text-brand-navy">What to expect</h2>
                 <p className="mt-3 text-sm leading-7 text-brand-navy/70">
-                  We aim to respond quickly and help you move toward the right cleaning plan or service request.
+                  We aim to respond quickly and help you move toward the right service or request.
                 </p>
               </div>
             </aside>
