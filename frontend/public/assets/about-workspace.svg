@@ -4,24 +4,207 @@
       <stop offset="0%" stop-color="#f8fffd"/>
       <stop offset="100%" stop-color="#dff4ef"/>
     </linearGradient>
-    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+    <linearGradient id="cardGrad" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#ddf5ee"/>
+      <stop offset="100%" stop-color="#f4fffe"/>
     </linearGradient>
+    <linearGradient id="navyGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#29476e"/>
+      <stop offset="100%" stop-color="#1f3a5f"/>
+    </linearGradient>
+    <linearGradient id="tealGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4fb6b0"/>
+      <stop offset="100%" stop-color="#3a9e98"/>
+    </linearGradient>
+    <linearGradient id="mintGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ddf5ee"/>
+      <stop offset="100%" stop-color="#c8f0e6"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="24" flood-color="rgba(31,58,95,0.14)"/>
+    </filter>
+    <filter id="shadowSm" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="rgba(31,58,95,0.12)"/>
+    </filter>
   </defs>
+
+  <!-- Background -->
   <rect width="1200" height="760" fill="url(#bg)"/>
-  <rect x="84" y="84" width="336" height="360" rx="34" fill="url(#panel)"/>
-  <rect x="124" y="136" width="220" height="22" rx="11" fill="#1f3a5f" fill-opacity=".10"/>
-  <rect x="124" y="176" width="160" height="22" rx="11" fill="#4fb6b0" fill-opacity=".25"/>
-  <rect x="124" y="216" width="200" height="22" rx="11" fill="#1f3a5f" fill-opacity=".08"/>
-  <rect x="124" y="292" width="176" height="22" rx="11" fill="#1f3a5f" fill-opacity=".08"/>
-  <circle cx="780" cy="220" r="160" fill="#1f3a5f" fill-opacity=".05"/>
-  <circle cx="780" cy="220" r="104" fill="#4fb6b0" fill-opacity=".13"/>
-  <rect x="688" y="364" width="340" height="146" rx="38" fill="#1f3a5f" fill-opacity=".94"/>
-  <rect x="728" y="408" width="120" height="20" rx="10" fill="#ffffff" fill-opacity=".88"/>
-  <rect x="728" y="444" width="178" height="16" rx="8" fill="#ddf5ee" fill-opacity=".88"/>
-  <circle cx="280" cy="612" r="92" fill="#4fb6b0" fill-opacity=".12"/>
-  <rect x="206" y="556" width="232" height="44" rx="22" fill="#ffffff" fill-opacity=".82"/>
-  <rect x="206" y="614" width="186" height="44" rx="22" fill="#ffffff" fill-opacity=".60"/>
-  <rect x="454" y="640" width="532" height="12" rx="6" fill="#4fb6b0" fill-opacity=".18"/>
+
+  <!-- Soft blob backgrounds -->
+  <circle cx="200" cy="200" r="180" fill="#4fb6b0" fill-opacity=".06"/>
+  <circle cx="980" cy="580" r="160" fill="#1f3a5f" fill-opacity=".05"/>
+  <circle cx="1050" cy="150" r="110" fill="#ddf5ee" fill-opacity=".7"/>
+
+  <!-- LEFT: Main large dashboard card -->
+  <rect x="70" y="60" width="500" height="580" rx="36" fill="url(#cardGrad)" filter="url(#shadow)"/>
+  <rect x="70" y="60" width="500" height="580" rx="36" fill="none" stroke="#e2f5ef" stroke-width="1.5"/>
+
+  <!-- Dashboard top bar -->
+  <rect x="70" y="60" width="500" height="90" rx="36" fill="url(#navyGrad)"/>
+  <rect x="70" y="110" width="500" height="40" fill="url(#navyGrad)"/>
+
+  <!-- Logo area in top bar -->
+  <rect x="102" y="86" width="36" height="36" rx="10" fill="#4fb6b0"/>
+  <text x="120" y="110" font-family="system-ui,sans-serif" font-size="16" font-weight="800" fill="white" text-anchor="middle">G</text>
+  <rect x="150" y="92" width="100" height="11" rx="5" fill="white" fill-opacity=".85"/>
+  <rect x="150" y="109" width="70" height="8" rx="4" fill="#4fb6b0" fill-opacity=".7"/>
+
+  <!-- Top bar right actions -->
+  <circle cx="516" cy="104" r="18" fill="white" fill-opacity=".1"/>
+  <rect x="504" y="97" width="24" height="14" rx="4" fill="white" fill-opacity=".2"/>
+  <rect x="507" y="100" width="18" height="8" rx="3" fill="#4fb6b0" fill-opacity=".5"/>
+
+  <!-- Nav tabs under top bar -->
+  <rect x="102" y="166" width="88" height="30" rx="15" fill="#4fb6b0" fill-opacity=".9"/>
+  <rect x="112" y="175" width="68" height="12" rx="6" fill="white" fill-opacity=".9"/>
+  <rect x="202" y="166" width="70" height="30" rx="15" fill="white" fill-opacity=".08"/>
+  <rect x="210" y="175" width="54" height="12" rx="6" fill="white" fill-opacity=".4"/>
+  <rect x="284" y="166" width="78" height="30" rx="15" fill="white" fill-opacity=".08"/>
+  <rect x="292" y="175" width="62" height="12" rx="6" fill="white" fill-opacity=".4"/>
+
+  <!-- SECTION: Upcoming service banner -->
+  <rect x="100" y="214" width="440" height="120" rx="22" fill="url(#tealGrad)"/>
+  <!-- Left calendar block -->
+  <rect x="120" y="234" width="70" height="80" rx="14" fill="white" fill-opacity=".15"/>
+  <rect x="128" y="244" width="54" height="12" rx="6" fill="white" fill-opacity=".8"/>
+  <rect x="128" y="262" width="38" height="10" rx="5" fill="white" fill-opacity=".55"/>
+  <rect x="128" y="278" width="46" height="10" rx="5" fill="white" fill-opacity=".4"/>
+  <rect x="128" y="294" width="54" height="8" rx="4" fill="white" fill-opacity=".3"/>
+  <!-- Text content right -->
+  <rect x="206" y="236" width="140" height="14" rx="7" fill="white" fill-opacity=".9"/>
+  <rect x="206" y="258" width="200" height="10" rx="5" fill="white" fill-opacity=".6"/>
+  <rect x="206" y="274" width="170" height="10" rx="5" fill="white" fill-opacity=".5"/>
+  <!-- Status pill -->
+  <rect x="206" y="296" width="90" height="24" rx="12" fill="white" fill-opacity=".2"/>
+  <rect x="218" y="302" width="66" height="12" rx="6" fill="white" fill-opacity=".8"/>
+  <!-- Arrow right -->
+  <rect x="490" y="260" width="28" height="28" rx="8" fill="white" fill-opacity=".15"/>
+  <path d="M500 270 L508 274 L500 278" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- SECTION: Service grid -->
+  <rect x="100" y="354" width="62" height="10" rx="5" fill="#1f3a5f" fill-opacity=".3"/>
+
+  <!-- Grid of 3 service cards -->
+  <rect x="100" y="376" width="130" height="130" rx="18" fill="url(#mintGrad)"/>
+  <rect x="118" y="394" width="40" height="40" rx="12" fill="#4fb6b0" fill-opacity=".3"/>
+  <rect x="124" y="402" width="28" height="6" rx="3" fill="#4fb6b0" fill-opacity=".8"/>
+  <rect x="124" y="412" width="20" height="6" rx="3" fill="#4fb6b0" fill-opacity=".6"/>
+  <rect x="124" y="422" width="24" height="6" rx="3" fill="#4fb6b0" fill-opacity=".4"/>
+  <rect x="118" y="446" width="94" height="10" rx="5" fill="#1f3a5f" fill-opacity=".65"/>
+  <rect x="118" y="462" width="80" height="8" rx="4" fill="#1f3a5f" fill-opacity=".3"/>
+  <rect x="118" y="476" width="65" height="7" rx="3" fill="#1f3a5f" fill-opacity=".2"/>
+
+  <rect x="246" y="376" width="130" height="130" rx="18" fill="url(#cardGrad)" stroke="#e8f4f0" stroke-width="1"/>
+  <rect x="264" y="394" width="40" height="40" rx="12" fill="#ddf5ee"/>
+  <circle cx="284" cy="414" r="12" fill="none" stroke="#4fb6b0" stroke-width="2"/>
+  <path d="M280 414 L283 417 L289 410" fill="none" stroke="#4fb6b0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="264" y="446" width="94" height="10" rx="5" fill="#1f3a5f" fill-opacity=".65"/>
+  <rect x="264" y="462" width="80" height="8" rx="4" fill="#1f3a5f" fill-opacity=".3"/>
+  <rect x="264" y="476" width="65" height="7" rx="3" fill="#1f3a5f" fill-opacity=".2"/>
+
+  <rect x="392" y="376" width="148" height="130" rx="18" fill="url(#navyGrad)"/>
+  <rect x="410" y="394" width="40" height="40" rx="12" fill="white" fill-opacity=".12"/>
+  <path d="M418 404 L426 404 M418 410 L430 410 M418 416 L424 416" stroke="white" stroke-width="2" stroke-linecap="round" fill="none"/>
+  <rect x="410" y="446" width="112" height="10" rx="5" fill="white" fill-opacity=".8"/>
+  <rect x="410" y="462" width="90" height="8" rx="4" fill="white" fill-opacity=".45"/>
+  <rect x="410" y="476" width="70" height="7" rx="3" fill="white" fill-opacity=".3"/>
+
+  <!-- SECTION: Recent activity -->
+  <rect x="100" y="524" width="62" height="10" rx="5" fill="#1f3a5f" fill-opacity=".3"/>
+
+  <rect x="100" y="546" width="440" height="52" rx="14" fill="white" stroke="#e8f4f0" stroke-width="1"/>
+  <rect x="118" y="562" width="28" height="28" rx="8" fill="#ddf5ee"/>
+  <rect x="124" y="570" width="16" height="12" rx="3" fill="#4fb6b0" fill-opacity=".6"/>
+  <rect x="156" y="564" width="130" height="10" rx="5" fill="#1f3a5f" fill-opacity=".65"/>
+  <rect x="156" y="580" width="180" height="8" rx="4" fill="#1f3a5f" fill-opacity=".25"/>
+  <rect x="472" y="562" width="44" height="24" rx="12" fill="#ddf5ee"/>
+  <rect x="480" y="569" width="28" height="10" rx="5" fill="#4fb6b0" fill-opacity=".7"/>
+
+  <!-- RIGHT: Floating stat cards column -->
+  <!-- Card 1: Big stat -->
+  <rect x="620" y="70" width="240" height="160" rx="24" fill="url(#cardGrad)" filter="url(#shadowSm)"/>
+  <rect x="620" y="70" width="240" height="160" rx="24" fill="none" stroke="#ddf5ee" stroke-width="1.5"/>
+  <rect x="648" y="96" width="60" height="60" rx="16" fill="url(#mintGrad)"/>
+  <!-- Sparkle / star shape -->
+  <path d="M678 112 L681 120 L688 116 L684 123 L691 126 L684 130 L688 137 L681 133 L678 141 L675 133 L668 137 L672 130 L665 126 L672 123 L668 116 L675 120 Z" fill="#4fb6b0" fill-opacity=".5"/>
+  <rect x="722" y="100" width="110" height="18" rx="9" fill="#1f3a5f" fill-opacity=".75"/>
+  <rect x="722" y="124" width="80" height="14" rx="7" fill="#1f3a5f" fill-opacity=".35"/>
+  <rect x="722" y="144" width="95" height="12" rx="6" fill="#1f3a5f" fill-opacity=".2"/>
+  <!-- Progress arc representation -->
+  <rect x="648" y="172" width="184" height="10" rx="5" fill="#e8f4f0"/>
+  <rect x="648" y="172" width="148" height="10" rx="5" fill="url(#tealGrad)"/>
+  <rect x="648" y="188" width="60" height="8" rx="4" fill="#4fb6b0" fill-opacity=".5"/>
+  <rect x="730" y="188" width="50" height="8" rx="4" fill="#1f3a5f" fill-opacity=".2"/>
+
+  <!-- Card 2: Chart/graph card -->
+  <rect x="620" y="252" width="240" height="200" rx="24" fill="url(#navyGrad)" filter="url(#shadowSm)"/>
+  <rect x="648" y="276" width="130" height="12" rx="6" fill="white" fill-opacity=".85"/>
+  <rect x="648" y="294" width="90" height="10" rx="5" fill="white" fill-opacity=".4"/>
+
+  <!-- Bar chart bars -->
+  <rect x="648" y="380" width="24" height="50" rx="6" fill="#4fb6b0" fill-opacity=".35"/>
+  <rect x="680" y="356" width="24" height="74" rx="6" fill="#4fb6b0" fill-opacity=".55"/>
+  <rect x="712" y="340" width="24" height="90" rx="6" fill="#4fb6b0" fill-opacity=".75"/>
+  <rect x="744" y="350" width="24" height="80" rx="6" fill="#4fb6b0" fill-opacity=".55"/>
+  <rect x="776" y="364" width="24" height="66" rx="6" fill="url(#tealGrad)"/>
+  <rect x="808" y="346" width="24" height="84" rx="6" fill="#4fb6b0" fill-opacity=".45"/>
+
+  <!-- Chart baseline -->
+  <rect x="640" y="432" width="208" height="2" rx="1" fill="white" fill-opacity=".15"/>
+
+  <!-- Tooltip on tallest bar -->
+  <rect x="700" y="316" width="70" height="30" rx="10" fill="white" fill-opacity=".15"/>
+  <rect x="709" y="325" width="52" height="12" rx="6" fill="white" fill-opacity=".8"/>
+
+  <!-- Card 3: Schedule / checklist card -->
+  <rect x="620" y="474" width="240" height="220" rx="24" fill="url(#cardGrad)" filter="url(#shadowSm)"/>
+  <rect x="620" y="474" width="240" height="220" rx="24" fill="none" stroke="#ddf5ee" stroke-width="1.5"/>
+  <rect x="648" y="498" width="120" height="12" rx="6" fill="#1f3a5f" fill-opacity=".7"/>
+  <rect x="648" y="516" width="80" height="8" rx="4" fill="#1f3a5f" fill-opacity=".3"/>
+
+  <!-- Checklist items -->
+  <rect x="648" y="538" width="26" height="26" rx="8" fill="url(#mintGrad)"/>
+  <path d="M655 551 L658 554 L663 547" fill="none" stroke="#4fb6b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="684" y="542" width="130" height="10" rx="5" fill="#1f3a5f" fill-opacity=".65"/>
+  <rect x="684" y="556" width="98" height="8" rx="4" fill="#1f3a5f" fill-opacity=".25"/>
+
+  <rect x="648" y="580" width="26" height="26" rx="8" fill="url(#mintGrad)"/>
+  <path d="M655 593 L658 596 L663 589" fill="none" stroke="#4fb6b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="684" y="584" width="150" height="10" rx="5" fill="#1f3a5f" fill-opacity=".65"/>
+  <rect x="684" y="598" width="110" height="8" rx="4" fill="#1f3a5f" fill-opacity=".25"/>
+
+  <rect x="648" y="622" width="26" height="26" rx="8" fill="#e8f4f0"/>
+  <rect x="655" y="633" width="12" height="12" rx="4" fill="#1f3a5f" fill-opacity=".15"/>
+  <rect x="684" y="626" width="110" height="10" rx="5" fill="#1f3a5f" fill-opacity=".3"/>
+  <rect x="684" y="640" width="80" height="8" rx="4" fill="#1f3a5f" fill-opacity=".15"/>
+
+  <!-- Button at bottom -->
+  <rect x="648" y="660" width="184" height="18" rx="9" fill="url(#tealGrad)" fill-opacity=".7"/>
+  <rect x="698" y="665" width="84" height="8" rx="4" fill="white" fill-opacity=".85"/>
+
+  <!-- Far right: Notification / mini card -->
+  <rect x="890" y="140" width="240" height="120" rx="20" fill="url(#cardGrad)" filter="url(#shadowSm)"/>
+  <rect x="890" y="140" width="240" height="120" rx="20" fill="none" stroke="#ddf5ee"/>
+  <rect x="910" y="160" width="40" height="40" rx="12" fill="url(#mintGrad)"/>
+  <!-- Bell icon -->
+  <path d="M926 168 Q922 168 920 172 L920 180 L918 182 L934 182 L932 180 L932 172 Q930 168 926 168 Z" fill="#4fb6b0" fill-opacity=".6"/>
+  <rect x="923" y="183" width="6" height="4" rx="2" fill="#4fb6b0" fill-opacity=".5"/>
+  <rect x="960" y="164" width="140" height="12" rx="6" fill="#1f3a5f" fill-opacity=".7"/>
+  <rect x="960" y="182" width="105" height="10" rx="5" fill="#1f3a5f" fill-opacity=".35"/>
+  <rect x="910" y="216" width="200" height="8" rx="4" fill="#e8f4f0"/>
+  <rect x="910" y="216" width="155" height="8" rx="4" fill="url(#tealGrad)"/>
+  <rect x="910" y="230" width="60" height="8" rx="4" fill="#4fb6b0" fill-opacity=".4"/>
+
+  <!-- Mini eco tag -->
+  <rect x="890" y="284" width="240" height="80" rx="18" fill="url(#navyGrad)" filter="url(#shadowSm)"/>
+  <rect x="910" y="300" width="30" height="30" rx="8" fill="white" fill-opacity=".1"/>
+  <path d="M925 304 Q933 304 933 312 Q933 320 925 322 Q925 314 917 314 Q917 306 925 304 Z" fill="#4fb6b0" fill-opacity=".7"/>
+  <line x1="925" y1="304" x2="925" y2="322" stroke="#4fb6b0" stroke-width="1.5" stroke-linecap="round"/>
+  <rect x="952" y="304" width="150" height="10" rx="5" fill="white" fill-opacity=".85"/>
+  <rect x="952" y="320" width="115" height="8" rx="4" fill="white" fill-opacity=".4"/>
+  <rect x="952" y="334" width="90" height="8" rx="4" fill="#4fb6b0" fill-opacity=".5"/>
+
+  <!-- Bottom spacing bar -->
+  <rect x="400" y="730" width="400" height="8" rx="4" fill="#4fb6b0" fill-opacity=".12"/>
 </svg>
