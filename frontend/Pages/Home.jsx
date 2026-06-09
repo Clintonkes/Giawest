@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import BubbleField from '../components/BubbleField'
-import { BadgeIcon, ServiceIcon } from '../components/ServiceIcons'
+import { ServiceIcon } from '../components/ServiceIcons'
 import {
   brand,
   contact,
@@ -29,78 +29,43 @@ export default function Home() {
           <div className="absolute inset-x-0 top-0 h-72 overflow-hidden">
             <BubbleField className="opacity-80" />
           </div>
-          <div className="section-shell relative py-16 lg:py-24">
-            <div className="grid items-center gap-12 lg:grid-cols-[1.05fr,0.95fr]">
-              <div className="max-w-2xl">
-                <div className="eyebrow mb-6">Premium home and commercial cleaning</div>
-                <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-brand-navy sm:text-5xl lg:text-6xl">
-                  Spaces cleaned with precision, delivered with calm confidence.
-                </h1>
-                <p className="mt-6 max-w-xl text-lg leading-8 text-brand-navy/72">
-                  {brand.tagline} From recurring home care to deep cleans and commercial maintenance, we make every order feel easy, polished, and reliable.
-                </p>
-
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                  <Link to="/booking" className="btn-primary">
-                    Book Service
-                  </Link>
-                  <Link to="/services" className="btn-secondary">
-                    Explore Services
-                  </Link>
-                </div>
-
-                <div className="mt-10 grid gap-3 sm:grid-cols-2">
-                  {trustIndicators.map((item) => (
-                    <div key={item} className="flex items-center gap-3 rounded-2xl border border-brand-gray bg-white/90 px-4 py-3 shadow-[0_14px_30px_-24px_rgba(31,58,95,0.35)]">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-mint text-brand-navy">
-                        <span className="text-lg">✓</span>
-                      </span>
-                      <span className="font-semibold text-brand-navy">{item}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-10 grid gap-4 sm:grid-cols-4">
-                  {stats.map((stat) => (
-                    <div key={stat.label} className="rounded-3xl border border-brand-gray bg-white p-4">
-                      <div className="text-2xl font-extrabold text-brand-navy">{stat.value}</div>
-                      <div className="mt-1 text-sm text-brand-navy/65">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
+          <div className="section-shell relative py-20 lg:py-28">
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="eyebrow mb-6">Premium home and commercial cleaning</div>
+              <h1 className="text-5xl font-extrabold leading-[1.05] tracking-tight text-brand-navy sm:text-6xl lg:text-7xl">
+                Spaces cleaned with precision, delivered with calm confidence.
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-brand-navy/72">
+                {brand.tagline} From recurring home care to deep cleans and commercial maintenance, we make every order feel easy, polished, and reliable.
+              </p>
+              <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <Link to="/booking" className="btn-primary">
+                  Book Service
+                </Link>
+                <Link to="/services" className="btn-secondary">
+                  Explore Services
+                </Link>
               </div>
+            </div>
 
-              <div className="relative">
-                <div className="relative overflow-hidden rounded-[2rem] border border-brand-gray bg-brand-mint shadow-[0_34px_80px_-44px_rgba(31,58,95,0.55)]">
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.95),rgba(221,245,238,0.92)_42%,rgba(79,182,176,0.22)_100%)]" />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.35)_0%,rgba(31,58,95,0.06)_100%)]" />
-                  <BubbleField className="z-[1] opacity-60" />
-                  <img
-                    src="/assets/home-hero.svg"
-                    alt="Polished interior illustration"
-                    className="relative z-[0] h-[520px] w-full object-cover"
-                  />
-                  <div className="absolute left-5 top-5 z-[3] rounded-2xl bg-white/95 p-4 shadow-lg">
-                    <div className="flex items-center gap-3">
-                      <BadgeIcon name="clock" />
-                      <div>
-                        <div className="text-sm font-bold text-brand-navy">Same-day handling</div>
-                        <div className="text-xs text-brand-navy/60">Fast, careful turnaround</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="absolute bottom-5 right-5 z-[3] rounded-2xl bg-white/95 p-4 shadow-lg">
-                    <div className="flex items-center gap-3">
-                      <BadgeIcon name="shield" />
-                      <div>
-                        <div className="text-sm font-bold text-brand-navy">Premium finish</div>
-                        <div className="text-xs text-brand-navy/60">Detailed, polished results</div>
-                      </div>
-                    </div>
-                  </div>
+            <div className="mt-16 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {trustIndicators.map((item) => (
+                <div key={item} className="flex items-center gap-3 rounded-2xl border border-brand-gray bg-white/90 px-4 py-4 shadow-[0_14px_30px_-24px_rgba(31,58,95,0.35)]">
+                  <span className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-brand-mint text-brand-navy">
+                    <span className="text-lg">✓</span>
+                  </span>
+                  <span className="font-semibold text-brand-navy">{item}</span>
                 </div>
-              </div>
+              ))}
+            </div>
+
+            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat) => (
+                <div key={stat.label} className="rounded-3xl border border-brand-gray bg-white p-5 text-center">
+                  <div className="text-3xl font-extrabold text-brand-navy">{stat.value}</div>
+                  <div className="mt-1 text-sm text-brand-navy/65">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -133,64 +98,35 @@ export default function Home() {
 
         <section className="bg-white py-20 lg:py-24">
           <div className="section-shell">
-            <div className="grid gap-10 lg:grid-cols-[0.95fr,1.05fr] lg:items-center">
-              <div className="relative">
-                <div className="overflow-hidden rounded-[2rem] border border-brand-gray bg-brand-mint shadow-[0_32px_72px_-48px_rgba(31,58,95,0.55)]">
-                  <img
-                    src="/assets/about-care.svg"
-                    alt="Service care illustration"
-                    className="h-[440px] w-full object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-6 left-6 rounded-[1.75rem] border border-brand-gray bg-white p-5 shadow-xl">
-                  <div className="flex items-start gap-4">
-                    <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-mint text-brand-navy">
-                      <ServiceIcon name="leaf" />
-                    </span>
-                    <div>
-                      <div className="font-bold text-brand-navy">Eco-conscious methods</div>
-                      <p className="mt-1 max-w-xs text-sm leading-6 text-brand-navy/65">
-                        Gentle cleaning choices designed to keep spaces fresh and surfaces protected.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="eyebrow">Why choose us</div>
+              <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-brand-navy sm:text-4xl">
+                Premium cleaning that feels simple from start to finish
+              </h2>
+              <p className="mt-4 text-base leading-7 text-brand-navy/70">
+                We built the experience around trust, timing, and quality. That means clear scheduling, reliable updates, and spaces returned in excellent condition.
+              </p>
+            </div>
 
-              <div>
-                <div className="eyebrow">Why choose us</div>
-                <h2 className="mt-5 text-3xl font-extrabold tracking-tight text-brand-navy sm:text-4xl">
-                  Premium cleaning that feels simple from start to finish
-                </h2>
-                <p className="mt-4 text-base leading-7 text-brand-navy/70">
-                  We built the experience around trust, timing, and quality. That means clear scheduling, reliable updates, and spaces returned in excellent condition.
-                </p>
-
-                <div className="mt-8 space-y-4">
-                  {whyChooseUs.map((item) => (
-                    <div key={item.title} className="rounded-3xl border border-brand-gray bg-white p-5">
-                      <div className="flex items-start gap-4">
-                        <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-mint text-brand-navy">
-                          <ServiceIcon name="shield" />
-                        </span>
-                        <div>
-                          <h3 className="font-bold text-brand-navy">{item.title}</h3>
-                          <p className="mt-1 text-sm leading-7 text-brand-navy/65">{item.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {whyChooseUs.map((item) => (
+                <div key={item.title} className="card card-hover p-7">
+                  <span className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-mint text-brand-navy">
+                    <ServiceIcon name="shield" />
+                  </span>
+                  <h3 className="text-xl font-bold text-brand-navy">{item.title}</h3>
+                  <p className="mt-3 text-sm leading-7 text-brand-navy/65">{item.description}</p>
                 </div>
+              ))}
+            </div>
 
-                <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-                  <Link to="/about" className="btn-secondary">
-                    Learn More
-                  </Link>
-                  <Link to="/booking" className="btn-primary">
-                    Schedule Service
-                  </Link>
-                </div>
-              </div>
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <Link to="/about" className="btn-secondary">
+                Learn More
+              </Link>
+              <Link to="/booking" className="btn-primary">
+                Schedule Service
+              </Link>
             </div>
           </div>
         </section>
